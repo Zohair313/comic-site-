@@ -13,7 +13,7 @@ export default function Header() {
             Greyfire Studio<span style={{ color: '#d71515', fontSize: 'clamp(1.5rem, 6vw, 32px)', lineHeight: '0.6', marginLeft: '2px' }}>.</span>
           </Link>
           
-          <button className="navbar-toggler d-lg-none border-0 px-0" type="button" onClick={() => {
+          <button className="navbar-toggler border-0 px-0" type="button" onClick={() => {
             if (window.bootstrap) {
               const offcanvasEl = document.getElementById('offcanvasRight');
               const offcanvas = window.bootstrap.Offcanvas.getInstance(offcanvasEl) || new window.bootstrap.Offcanvas(offcanvasEl);
@@ -23,7 +23,7 @@ export default function Header() {
             <i className="fa-solid fa-bars" style={{ fontSize: '28px', color: '#111' }}></i>
           </button>
 
-          <div className="collapse navbar-collapse d-none d-lg-flex justify-content-end w-100" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse justify-content-end w-100" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mt-0 mb-lg-0 me-4 align-items-center" style={{ gap: '20px', fontWeight: '600', fontSize: '14px' }}>
               <li className="nav-item">
                 <Link className={getNavClass("/")} to="/" style={{ color: '#777' }}>HOME</Link>
