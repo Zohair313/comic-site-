@@ -13,7 +13,7 @@ export default function Header() {
             Greyfire Studio<span style={{ color: '#d71515', fontSize: 'clamp(1.5rem, 6vw, 32px)', lineHeight: '0.6', marginLeft: '2px' }}>.</span>
           </Link>
           
-          <button className="navbar-toggler border-0 px-0" type="button" onClick={() => {
+          <button className="mobile-nav border-0 px-0 bg-transparent" type="button" onClick={() => {
             if (window.bootstrap) {
               const offcanvasEl = document.getElementById('offcanvasRight');
               const offcanvas = window.bootstrap.Offcanvas.getInstance(offcanvasEl) || new window.bootstrap.Offcanvas(offcanvasEl);
@@ -23,7 +23,7 @@ export default function Header() {
             <i className="fa-solid fa-bars" style={{ fontSize: '28px', color: '#111' }}></i>
           </button>
 
-          <div className="collapse navbar-collapse justify-content-end w-100" id="navbarSupportedContent">
+          <div className="desktop-nav">
             <ul className="navbar-nav mb-2 mt-0 mb-lg-0 me-4 align-items-center" style={{ gap: '20px', fontWeight: '600', fontSize: '14px' }}>
               <li className="nav-item">
                 <Link className={getNavClass("/")} to="/" style={{ color: '#777' }}>HOME</Link>
@@ -56,7 +56,7 @@ export default function Header() {
               </Link>
             </div>
             {/* The hamburger icon on desktop from the screenshot */}
-            <div className="d-none d-lg-flex ms-3 align-items-center justify-content-center" style={{ width: '40px', height: '40px', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+            <div className="ms-3 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
               <i className="fa-solid fa-bars" style={{ fontSize: '24px', color: '#555' }}></i>
             </div>
           </div>

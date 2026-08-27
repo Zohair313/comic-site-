@@ -1,5 +1,16 @@
 @import url('https://fonts.cdnfonts.com/css/opendyslexic');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.desktop-nav { display: flex !important; align-items: center; justify-content: flex-end; width: 100%; }
+.mobile-nav { display: none !important; }
+@media (max-width: 991px) {
+  .desktop-nav { display: none !important; }
+  .mobile-nav { display: block !important; }
+}
+
 /* Global Font Override */
 body, h1, h2, h3, h4, h5, h6, p, a, span, div, li, button, input {
   font-family: 'OpenDyslexic', sans-serif !important;
