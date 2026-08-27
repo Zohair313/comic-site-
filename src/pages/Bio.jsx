@@ -23,7 +23,7 @@ export default function Bio() {
           <div className="row pt-5 align-items-center">
             <div className="col-lg-5 col-md-9 m-md-auto about-main">
               <img 
-                src="/images/custom/creator_bio_1787177588804.jpg" 
+                src="images/custom/creator_bio_1787177588804.jpg" 
                 alt="Author" 
                 className="img-fluid rounded" 
                 style={{ width: '100%' }}

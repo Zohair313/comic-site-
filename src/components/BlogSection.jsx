@@ -24,7 +24,7 @@ export default function BlogSection() {
             <div className="w-full md:w-5/12 p-4 md:p-6">
               <div className="rounded-xl overflow-hidden shadow-lg group cursor-pointer relative">
                 <img 
-                  src="/images/intro_post.jpeg" 
+                  src="images/intro_post.jpeg" 
                   alt="Intro Post" 
                   className="w-full h-[300px] object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -49,7 +49,7 @@ export default function BlogSection() {
               {/* Author Info */}
               <div className="flex items-center gap-4">
                 <img 
-                  src="/images/intro_post.jpeg" 
+                  src="images/intro_post.jpeg" 
                   alt="Author" 
                   className="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white"
                 />

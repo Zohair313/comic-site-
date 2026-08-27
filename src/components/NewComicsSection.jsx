@@ -14,8 +14,8 @@ export default function NewComicsSection() {
  <div class="row comic-item-pos">
  <div class="col-lg-4 col-md-8 mobile-m-auto">
  <div class="comic-item">
- <img src="/assets/extracted/extracted_0_054e71aa.png" alt="comic" class="img-fluid">
- <a class="veno-img vbox-item" data-gall="comic1" href="/assets/extracted/extracted_0_054e71aa.png"><i class="fa-solid fa-plus"></i></a>
+ <img src="assets/extracted/extracted_0_054e71aa.png" alt="comic" class="img-fluid">
+ <a class="veno-img vbox-item" data-gall="comic1" href="assets/extracted/extracted_0_054e71aa.png"><i class="fa-solid fa-plus"></i></a>
  <div class="comic-item-details">
  <div class="row">
  <div class="col-8 col-lg-8">
@@ -31,8 +31,8 @@ export default function NewComicsSection() {
  </div>
  <div class="col-lg-4 col-md-8 mobile-m-auto">
  <div class="comic-item active">
- <img src="/assets/extracted/extracted_1_7cfdb76e.png" alt="comic" class="img-fluid">
- <a class="veno-img vbox-item" data-gall="comic1" href="/assets/extracted/extracted_1_7cfdb76e.png"><i class="fa-solid fa-plus"></i></a>
+ <img src="assets/extracted/extracted_1_7cfdb76e.png" alt="comic" class="img-fluid">
+ <a class="veno-img vbox-item" data-gall="comic1" href="assets/extracted/extracted_1_7cfdb76e.png"><i class="fa-solid fa-plus"></i></a>
  <div class="comic-item-details">
  <div class="row">
  <div class="col-8 col-lg-8">
@@ -48,8 +48,8 @@ export default function NewComicsSection() {
  </div>
  <div class="col-lg-4 col-md-8 mobile-m-auto">
  <div class="comic-item">
- <img src="/assets/extracted/extracted_2_d1092ee1.png" alt="comic" class="img-fluid">
- <a class="veno-img vbox-item" data-gall="comic1" href="/assets/extracted/extracted_2_d1092ee1.png"><i class="fa-solid fa-plus"></i></a>
+ <img src="assets/extracted/extracted_2_d1092ee1.png" alt="comic" class="img-fluid">
+ <a class="veno-img vbox-item" data-gall="comic1" href="assets/extracted/extracted_2_d1092ee1.png"><i class="fa-solid fa-plus"></i></a>
  <div class="comic-item-details">
  <div class="row">
  <div class="col-8 col-lg-8">

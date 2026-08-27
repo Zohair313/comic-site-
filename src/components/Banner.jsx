@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function Banner() {
   return (
     <section id="banner" style={{ 
-      background: "url('/images/background full page.jpg') center/cover no-repeat", 
+      background: "url('images/background full page.jpg') center/cover no-repeat", 
       position: 'relative' 
     }}>
       {/* Overlay to ensure text readability against the background */}
@@ -53,7 +53,7 @@ export default function Banner() {
           </div>
           <div className="col-10 col-sm-11 col-md-7 col-lg-6 banner-images mt-5 mt-lg-0 text-center">
             <img 
-              src="/images/hero-comic-cover.jpg" 
+              src="images/hero-comic-cover.jpg" 
               alt="Comic Story" 
               style={{ 
                 maxWidth: '100%',

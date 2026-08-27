@@ -16,17 +16,17 @@ export default function Reader() {
 
   // Dummy pages for a chapter
   const pages = [
-    '/images/Comic story pages.jpg',
-    '/images/Comic story pages1.jpg',
-    '/images/Comic story pages2.jpg',
-    '/images/Comic story pages3.jpg',
-    '/images/Comic story pages4.jpg',
-    '/images/Comic story pages5.jpg',
-    '/images/Comic story pages6.jpg',
-    '/images/Comic story pages7.jpg',
-    '/images/Comic story pages8.jpg',
-    '/images/Comic story pages9.jpg',
-    '/images/Comic story pages10.jpg'
+    'images/Comic story pages.jpg',
+    'images/Comic story pages1.jpg',
+    'images/Comic story pages2.jpg',
+    'images/Comic story pages3.jpg',
+    'images/Comic story pages4.jpg',
+    'images/Comic story pages5.jpg',
+    'images/Comic story pages6.jpg',
+    'images/Comic story pages7.jpg',
+    'images/Comic story pages8.jpg',
+    'images/Comic story pages9.jpg',
+    'images/Comic story pages10.jpg'
   ];
 
   return (

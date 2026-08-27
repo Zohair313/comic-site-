@@ -7,10 +7,10 @@ import { Link005 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Lore() {
   const characters = [
-    { name: 'Kaelen', role: 'The Protagonist', desc: 'A young warrior with a mysterious past and a burning desire for justice. He wields the Flame of Aether, an ancient power thought lost forever.', img: '/images/custom/char_kaelen_1787177600102.jpg' },
-    { name: 'Lyra', role: 'Master Mage', desc: 'A brilliant tactician who wields elemental magic with devastating precision. She is the last of the Starweavers, a forgotten order of sorcerers.', img: '/images/custom/char_lyra_1787177611766.jpg' },
-    { name: 'Draken', role: 'The Antagonist', desc: 'A ruthless warlord seeking to conquer the fractured realms. His power comes from corrupted Aether, twisting the natural order.', img: '/images/custom/char_draken_1787177625172.jpg' },
-    { name: 'Elara', role: 'The Guide', desc: 'An ancient spirit trapped in human form, guiding Kaelen on his journey. She remembers the world before the Great Cataclysm.', img: '/images/custom/char_elara_1787177638388.jpg' },
+    { name: 'Kaelen', role: 'The Protagonist', desc: 'A young warrior with a mysterious past and a burning desire for justice. He wields the Flame of Aether, an ancient power thought lost forever.', img: 'images/custom/char_kaelen_1787177600102.jpg' },
+    { name: 'Lyra', role: 'Master Mage', desc: 'A brilliant tactician who wields elemental magic with devastating precision. She is the last of the Starweavers, a forgotten order of sorcerers.', img: 'images/custom/char_lyra_1787177611766.jpg' },
+    { name: 'Draken', role: 'The Antagonist', desc: 'A ruthless warlord seeking to conquer the fractured realms. His power comes from corrupted Aether, twisting the natural order.', img: 'images/custom/char_draken_1787177625172.jpg' },
+    { name: 'Elara', role: 'The Guide', desc: 'An ancient spirit trapped in human form, guiding Kaelen on his journey. She remembers the world before the Great Cataclysm.', img: 'images/custom/char_elara_1787177638388.jpg' },
   ];
 
   const loreEntries = [
