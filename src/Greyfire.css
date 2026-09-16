@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/opendyslexic');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,9 +11,9 @@
   .mobile-nav { display: block !important; }
 }
 
-/* Global Font Override */
+/* Global Font Override — Plus Jakarta Sans (body / UI) */
 body, h1, h2, h3, h4, h5, h6, p, a, span, div, li, button, input {
-  font-family: 'OpenDyslexic', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Arial, Helvetica, sans-serif !important;
 }
 
 html, body {
@@ -26,15 +26,36 @@ img {
   height: auto;
 }
 
-/* Safe Theme Overrides (Grey accents) keeping white background */
+/* Greyfire Studio Theme - Comic Red on Cream/Dark Slate */
+:root {
+  --gf-red: #ED3833;
+  --gf-red-dark: #c92825;
+  --gf-charcoal: #4A3B32;
+  --gf-text: #1a1a1a;
+  --gf-muted: #444444;
+  --gf-light: #f5f2eb;
+}
+
+/* Button Overrides - Comic Red */
 .button-primary, .button-secondary, .btn-primary {
-  background-color: #4b5563 !important; /* dark grey */
-  border-color: #4b5563 !important;
+  background-color: #ED3833 !important;
+  border-color: #ED3833 !important;
   color: #fff !important;
 }
 .button-primary:hover, .button-secondary:hover, .btn-primary:hover {
-  background-color: #6b7280 !important; /* lighter grey */
-  border-color: #6b7280 !important;
+  background-color: #c92825 !important;
+  border-color: #c92825 !important;
+}
+
+/* Outlined red button helper */
+.btn-outline-red {
+  background-color: transparent !important;
+  border: 2px solid #ED3833 !important;
+  color: #ED3833 !important;
+}
+.btn-outline-red:hover {
+  background-color: #ED3833 !important;
+  color: #fff !important;
 }
 
 a {
@@ -44,7 +65,30 @@ a:hover {
   color: #374151; /* dark grey hover */
 }
 .navbar-brand span {
-  color: #4b5563 !important; /* grey dot */
+  color: #ED3833 !important; /* red dot */
+}
+
+/* Main titles — Bangers (comic poster voice) */
+.display-font {
+  font-family: 'Bangers', 'Arial Black', 'Helvetica Neue', 'Segoe UI', Arial, Helvetica, sans-serif !important;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Small uppercase tracked metadata — Comic Neue (captions) */
+.eyebrow-text {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+/* Badges / captions — Comic Neue 700 */
+.badge-font {
+  font-family: 'Comic Neue', 'Segoe UI', Arial, Helvetica, sans-serif !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 /* Reader Specific Overrides */
@@ -56,5 +100,72 @@ a:hover {
   width: 100%;
   margin: 0 auto;
   display: block;
+}
+
+/* =============================================
+   MARQUEE TICKER (left-to-right)
+============================================= */
+.gf-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.gf-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  animation: gf-marquee-ltr 32s linear infinite;
+}
+.gf-marquee-strip {
+  display: inline-flex;
+  align-items: center;
+}
+.gf-marquee-item {
+  color: #fff;
+  font-family: 'Bangers', 'Arial Black', 'Helvetica Neue', 'Segoe UI', Arial, Helvetica, sans-serif !important;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 1.45rem;
+  padding: 0 18px;
+}
+.gf-marquee-spark {
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0 6px;
+}
+@keyframes gf-marquee-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gf-marquee-track {
+    animation: none;
+  }
+}
+
+/* Rotating hero slide crossfade */
+.hero-fade {
+  animation: gf-hero-fade 0.7s ease both;
+}
+@keyframes gf-hero-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade {
+    animation: none;
+  }
+}
+
+/* Hero background video */
+.hero-video {
+  transition: opacity 0.4s ease;
+  opacity: 1;
+}
+/* Reduced-motion users get the static poster/art instead of the looping video */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
 }
 

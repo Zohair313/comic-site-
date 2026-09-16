@@ -26,10 +26,10 @@ export default function Lore() {
       <section className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <Badge variant="outline" className="mb-4 text-red-500 border-red-500/30">
+            <Badge variant="outline" className="mb-4 text-[#879F84] border-[#879F84]/30">
               World Wiki
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-[#ED3833] to-[#c92825] bg-clip-text text-transparent">
               The Fractured Realms
             </h1>
             <p className="text-lg text-zinc-600 leading-relaxed">
@@ -41,9 +41,9 @@ export default function Lore() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {loreEntries.map((entry, idx) => (
-              <Card key={idx} className="bg-white border-zinc-200 hover:border-red-500 transition-all duration-300 hover:-translate-y-1 shadow-sm">
+              <Card key={idx} className="bg-white border-zinc-200 hover:border-[#ED3833] transition-all duration-300 hover:-translate-y-1 shadow-sm">
                 <CardHeader className="text-center pb-2">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center mb-4 shadow-lg shadow-red-600/20">
+                  <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-[#ED3833] to-[#4A3B32] flex items-center justify-center mb-4 shadow-lg shadow-[#ED3833]/20">
                     <i className={`fa-solid ${entry.icon} text-white text-xl`}></i>
                   </div>
                   <CardTitle className="text-xl text-zinc-900">{entry.title}</CardTitle>
@@ -65,7 +65,7 @@ export default function Lore() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 text-red-500 border-red-500/30">
+            <Badge variant="outline" className="mb-4 text-[#879F84] border-[#879F84]/30">
               Character Bios
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900">
@@ -77,7 +77,7 @@ export default function Lore() {
             {characters.map((char, idx) => (
               <Card key={idx} className="bg-white border-zinc-200 overflow-hidden group shadow-sm">
                 <div className="relative pt-6 px-6">
-                  <div className="aspect-square rounded-full overflow-hidden border-4 border-zinc-100 group-hover:border-red-500 transition-colors duration-500">
+                  <div className="aspect-square rounded-full overflow-hidden border-4 border-zinc-100 group-hover:border-[#ED3833] transition-colors duration-500">
                     <img 
                       src={char.img} 
                       alt={char.name} 
@@ -87,16 +87,16 @@ export default function Lore() {
                 </div>
                 <CardHeader className="text-center">
                   <CardTitle className="text-2xl text-zinc-900">{char.name}</CardTitle>
-                  <p className="text-sm font-medium text-red-600">{char.role}</p>
+                  <p className="text-sm font-medium text-[#879F84]">{char.role}</p>
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-sm text-zinc-600 leading-relaxed mb-6">{char.desc}</p>
                   
                   <div className="flex justify-center space-x-4">
-                    <a href="#" onClick={(e) => e.preventDefault()} className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-500 hover:text-white hover:bg-red-500 transition-colors">
+                    <a href="#" onClick={(e) => e.preventDefault()} className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-500 hover:text-white hover:bg-[#ED3833] transition-colors">
                       <i className="fa-brands fa-facebook-f text-sm"></i>
                     </a>
-                    <a href="#" onClick={(e) => e.preventDefault()} className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-500 hover:text-white hover:bg-red-500 transition-colors">
+                    <a href="#" onClick={(e) => e.preventDefault()} className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-500 hover:text-white hover:bg-[#ED3833] transition-colors">
                       <i className="fa-brands fa-twitter text-sm"></i>
                     </a>
                   </div>
@@ -111,11 +111,11 @@ export default function Lore() {
               <p className="text-zinc-600 text-sm">Reach out to us to explore the full story.</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Link005 href="mailto:contact@greyfire.com" className="text-red-500 font-medium py-2">
+              <Link005 href="mailto:contact@greyfire.com" className="text-[#ED3833] font-medium py-2">
                 Contact Us
               </Link005>
               <Link to="/reader">
-                <Button className="bg-red-600 hover:bg-red-700 text-white rounded-full px-6 py-5">
+                <Button className="bg-[#ED3833] hover:bg-[#c92825] text-white rounded-full px-6 py-5">
                   Start Reading <i className="fa-solid fa-arrow-right ml-2"></i>
                 </Button>
               </Link>

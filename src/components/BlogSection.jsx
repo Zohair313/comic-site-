@@ -1,68 +1,82 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function BlogSection() {
   return (
-    <section id="blog" className="py-24 bg-zinc-50">
-      <div className="container mx-auto px-4">
-        
-        {/* Section Header */}
-        <div className="mb-16">
-          <span className="text-red-600 font-black tracking-widest uppercase text-sm mb-2 block">Blogs</span>
-          <h3 className="text-4xl md:text-5xl font-black text-zinc-900 uppercase tracking-tight">Our Top Trendy<br/>Comic News.</h3>
+    <section id="updates" className="bg-[#4A3B32]">
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        {/* Section header */}
+        <div className="text-center mb-10">
+          <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] uppercase mb-3">Studio Blog</p>
+          <h2 className="display-font font-black text-white text-5xl md:text-6xl">
+            Behind the Scenes &amp; Updates<span className="text-[#ED3833]">.</span>
+          </h2>
         </div>
 
-        {/* Blog Item */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300">
-          <div className="flex flex-col md:flex-row items-center">
-            
-            {/* Number Indicator (Optional, replacing the weird stroked 01) */}
-            <div className="hidden md:flex md:w-1/12 justify-center items-center">
-              <span className="text-5xl font-black text-gray-200" style={{ WebkitTextStroke: '0px' }}>01</span>
-            </div>
+        {/* Featured update card — constrained width */}
+        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 items-stretch">
 
-            {/* Blog Image */}
-            <div className="w-full md:w-5/12 p-4 md:p-6">
-              <div className="rounded-xl overflow-hidden shadow-lg group cursor-pointer relative">
-                <img 
-                  src="images/intro_post.jpeg" 
-                  alt="Intro Post" 
-                  className="w-full h-[300px] object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-300"></div>
+            {/* Text side */}
+            <div className="flex flex-col">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="display-font text-[#ED3833] text-6xl leading-none">01</span>
+                <span className="badge-font bg-[#879F84] text-white text-xs font-extrabold tracking-[0.2em] uppercase px-4 py-2 rounded-full">
+                  Announcement
+                </span>
               </div>
-            </div>
 
-            {/* Blog Content */}
-            <div className="w-full md:w-6/12 p-8 md:p-12">
-              <span className="inline-block px-3 py-1 bg-zinc-100 text-zinc-600 font-bold text-xs uppercase tracking-wider rounded-full mb-4">Announcement</span>
-              
-              <a href="#" className="block group">
-                <h4 className="text-3xl font-black text-zinc-900 group-hover:text-red-600 transition-colors mb-4" style={{ WebkitTextStroke: '0px' }}>
-                  Intro Post: A New Adventure Begins
-                </h4>
-              </a>
-              
-              <p className="text-zinc-600 text-lg mb-8 leading-relaxed">
-                Welcome to our brand new comic reading platform! We are thrilled to share our passion for incredible storytelling, stunning artwork, and immersive worlds. Join us as we explore the endless possibilities of the comic universe, starting with this special introductory update. Grab a cup of your favorite drink, head into the forest of imagination, and let the adventure unfold!
+              <h3 className="display-font text-[#4A3B32] text-3xl md:text-4xl mb-4">
+                Intro Post: A New Adventure Begins
+              </h3>
+              <p className="text-gray-500 text-base leading-relaxed flex-grow">
+                Every page of this comic starts as nothing but blank paper and a pencil. This is the
+                first post from the studio — a look at why Greyfire exists, what Blue Sky 1 means to
+                me, and everything we're drawing next. Welcome to the adventure.
               </p>
-              
-              {/* Author Info */}
-              <div className="flex items-center gap-4">
-                <img 
-                  src="images/intro_post.jpeg" 
-                  alt="Author" 
-                  className="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white"
-                />
-                <div>
-                  <h5 className="font-bold text-zinc-900 m-0">Greyfire Studio</h5>
-                  <p className="text-sm text-zinc-500 m-0 font-medium">August 22, 2026</p>
-                </div>
-              </div>
 
+              {/* Bottom row — author + date, anchored to bottom */}
+              <div className="flex flex-wrap items-center justify-between gap-4 mt-auto pt-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-[#ED3833] bg-[#F5F2EB]">
+                    <img
+                      src="images/custom/creator_bio_1787177588804.jpg"
+                      alt="Wessley"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[#4A3B32] font-extrabold text-base leading-tight">Wessley</p>
+                    <p className="text-gray-400 text-sm leading-tight">Founder &amp; Artist</p>
+                  </div>
+                </div>
+
+                <span className="badge-font inline-flex items-center gap-2 bg-[#F5F2EB] text-[#4A3B32] text-sm font-extrabold tracking-wider uppercase px-5 py-2.5 rounded-full">
+                  <i className="fa-solid fa-calendar-days text-[#ED3833]"></i>August 22, 2026
+                </span>
+              </div>
+            </div>
+
+            {/* Comic strip image side */}
+            <div className="relative rounded-lg overflow-hidden min-h-[280px] bg-[#F5F2EB]">
+              <img
+                src="images/Comic story pages5.jpg"
+                alt="Hand-drawn comic page preview"
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => { e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600"><rect fill="%23e8e4db" width="400" height="600"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-size="18">Page Art</text></svg>'; }}
+              />
+              <span className="badge-font absolute bottom-4 left-4 bg-[#4A3B32] text-white text-xs font-extrabold tracking-widest uppercase px-4 py-2 rounded-full shadow">
+                <i className="fa-solid fa-pen-nib text-[#ED3833] mr-1.5"></i>WIP Page
+              </span>
             </div>
           </div>
         </div>
 
+        <div className="text-center mt-8">
+          <Link to="/lore" className="inline-flex items-center px-6 py-3 text-base rounded-md border-2 border-[#E8E4DB] text-[#E8E4DB] font-bold hover:bg-[#E8E4DB] hover:text-[#4A3B32] transition-colors">
+            View All Updates
+          </Link>
+        </div>
       </div>
     </section>
   );
