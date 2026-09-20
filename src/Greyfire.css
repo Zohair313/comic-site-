@@ -34,6 +34,22 @@ img {
   --gf-text: #1a1a1a;
   --gf-muted: #444444;
   --gf-light: #f5f2eb;
+
+  /* Type scale tokens */
+  --gf-fs-caption: 0.8rem;      /* copyright, mini labels */
+  --gf-fs-sm: 0.875rem;         /* footer text/links, captions */
+  --gf-fs-base: 1rem;           /* body */
+  --gf-fs-lg: 1.25rem;          /* brand, footer icons */
+  --gf-fs-display-sm: 1.5rem;   /* marquee ticker */
+  --gf-fs-display-md: 1.875rem; /* card sub-headings */
+  --gf-fs-display-xl: 3.75rem;  /* section h2 (6xl) */
+
+  /* Corner radius tokens */
+  --gf-radius-sm: 6px;    /* buttons, inputs, small corners */
+  --gf-radius-md: 12px;   /* cards */
+  --gf-radius-lg: 16px;   /* large panels */
+  --gf-radius-xl: 24px;   /* hero CTA panels */
+  --gf-radius-pill: 9999px;
 }
 
 /* Button Overrides - Comic Red */
@@ -123,9 +139,8 @@ a:hover {
   color: #fff;
   font-family: 'Bangers', 'Arial Black', 'Helvetica Neue', 'Segoe UI', Arial, Helvetica, sans-serif !important;
   font-weight: 400;
-  text-transform: uppercase;
   letter-spacing: 3px;
-  font-size: 1.45rem;
+  font-size: var(--gf-fs-display-sm);
   padding: 0 18px;
 }
 .gf-marquee-spark {
@@ -167,5 +182,14 @@ a:hover {
   .hero-video {
     display: none;
   }
+}
+
+/* Footer email input — distinct boundary and legible placeholder on dark bg */
+#footer .form-control::placeholder {
+  color: #aeb4bc;
+}
+#footer .form-control:focus {
+  border-color: #ED3833;
+  box-shadow: 0 0 0 3px rgba(237, 56, 51, 0.25);
 }
 

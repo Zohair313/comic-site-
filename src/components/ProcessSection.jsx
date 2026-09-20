@@ -54,7 +54,7 @@ export default function ProcessSection() {
                 <i className={`${step.icon} text-3xl text-[#ED3833]`}></i>
               </div>
 
-              <h4 className="display-font text-[#4A3B32] text-3xl mb-3">{step.title}</h4>
+              <h3 className="display-font text-[#4A3B32] text-3xl mb-3 normal-case">{step.title}</h3>
               <p className="text-gray-500 text-base leading-relaxed mb-4 flex-grow">{step.desc}</p>
 
               <div className="flex flex-wrap gap-2">

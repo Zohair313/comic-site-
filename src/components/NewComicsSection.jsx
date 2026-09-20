@@ -36,7 +36,7 @@ export default function NewComicsSection() {
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] uppercase mb-3">The Collection</p>
-          <h2 className="display-font font-black text-white text-6xl md:text-7xl">
+          <h2 className="display-font font-black text-white text-6xl md:text-7xl normal-case">
             What We're Making<span className="text-[#ED3833]">.</span>
           </h2>
         </div>
@@ -58,7 +58,7 @@ export default function NewComicsSection() {
 
               {/* Body */}
               <div className="p-5 flex flex-col flex-grow">
-                <h3 className="display-font text-[#4A3B32] text-2xl leading-tight mb-2">{item.title}</h3>
+                <h3 className="display-font text-[#4A3B32] text-2xl leading-tight mb-2 normal-case">{item.title}</h3>
                 <p className="text-gray-500 text-base leading-relaxed flex-grow mb-4">{item.desc}</p>
 
                 {/* Red tags */}
@@ -71,8 +71,8 @@ export default function NewComicsSection() {
                 </div>
 
                 {/* Compact buttons */}
-                <div className="flex flex-wrap gap-2">
-                  <Link to={item.cta.to} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-base rounded-md bg-[#ED3833] text-white font-bold hover:bg-[#c92825] transition-colors">
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  <Link to={item.cta.to} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-base rounded-md border border-[#ED3833] bg-[#ED3833] text-white font-bold hover:bg-[#c92825] hover:border-[#c92825] transition-colors">
                     <i className={item.cta.icon}></i>{item.cta.text}
                   </Link>
                   {item.ctaSecondary && (

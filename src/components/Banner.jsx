@@ -70,13 +70,13 @@ export default function Banner() {
 
           {/* Left column — rotating book info */}
           <div>
-            <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] uppercase mb-5">
-              Greyfire Studio Presents
+            <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] mb-5">
+              Greyfire Studio presents
             </p>
 
             <div key={active} className="hero-fade">
               <div className="min-h-[7.5rem] md:min-h-[10rem] flex flex-col justify-end">
-                <h1 className="display-font font-black text-[#4A3B32] text-6xl md:text-8xl xl:text-9xl leading-none mb-5">
+                <h1 className="display-font font-black text-[#4A3B32] text-6xl md:text-8xl leading-none mb-5">
                   {book.name}
                 </h1>
               </div>
@@ -95,8 +95,16 @@ export default function Banner() {
               </p>
             </div>
 
-            {/* Slide counter + dots */}
-            <div className="flex items-center gap-4 mb-6">
+            {/* Slide counter + dots + directional arrows */}
+            <div className="flex items-center gap-3 mb-6">
+              <button
+                type="button"
+                aria-label="Previous slide"
+                onClick={() => goTo(active - 1)}
+                className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#4A3B32]/30 text-[#4A3B32] hover:bg-[#ED3833] hover:text-white hover:border-[#ED3833] transition-colors"
+              >
+                <i className="fa-solid fa-chevron-left text-sm"></i>
+              </button>
               <span className="badge-font text-[#4A3B32] text-base tracking-widest">
                 {String(active + 1).padStart(2, '0')}<span className="text-gray-400"> / {String(total).padStart(2, '0')}</span>
               </span>
@@ -107,28 +115,41 @@ export default function Banner() {
                     type="button"
                     aria-label={`Go to slide ${idx + 1}`}
                     onClick={() => goTo(idx)}
-                    className={idx === active
-                      ? 'h-2.5 w-7 rounded-full bg-[#ED3833] transition-all'
-                      : 'h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-[#ED3833] transition-all'}
-                  ></button>
+                    className="group flex items-center justify-center p-2 -m-2 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ED3833]"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={idx === active
+                        ? 'h-4 w-7 rounded-full bg-[#ED3833] transition-all'
+                        : 'h-4 w-4 rounded-full bg-gray-300 group-hover:bg-[#ED3833] transition-all'}
+                    ></span>
+                  </button>
                 ))}
               </div>
+              <button
+                type="button"
+                aria-label="Next slide"
+                onClick={() => goTo(active + 1)}
+                className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#4A3B32]/30 text-[#4A3B32] hover:bg-[#ED3833] hover:text-white hover:border-[#ED3833] transition-colors"
+              >
+                <i className="fa-solid fa-chevron-right text-sm"></i>
+              </button>
             </div>
 
             {/* Twin CTAs */}
             <div className="flex flex-wrap gap-3.5">
-              <Link to="/reader" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#ED3833] text-white font-bold text-base hover:bg-[#c92825] transition-colors">
+              <Link to="/reader" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-[#ED3833] bg-[#ED3833] text-white font-bold text-base hover:bg-[#c92825] hover:border-[#c92825] transition-colors">
                 <i className="fa-solid fa-book-open"></i>Read Now
               </Link>
               <Link to="/shop" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-[#ED3833] text-[#ED3833] font-bold text-base hover:bg-[#ED3833] hover:text-white transition-colors">
-                Get Art Book &amp; Cards
+                <i className="fa-solid fa-cart-shopping"></i>Get Art Book &amp; Cards
               </Link>
             </div>
           </div>
 
           {/* Right column — 3D angled cover, contained within section */}
           <div className="hidden lg:flex justify-center items-center" style={{ perspective: '1200px' }}>
-            <div className="relative" style={{ maxWidth: '340px', maxHeight: '440px', overflow: 'hidden', borderRadius: '8px' }}>
+            <div className="relative" style={{ maxWidth: '340px', maxHeight: '440px', overflow: 'hidden', borderRadius: '6px' }}>
 
               {/* 3D angled book — subtler rotation so it stays proportional to text */}
               <div className="relative inline-block" style={{ transform: 'rotateY(-8deg) rotateX(3deg) rotateZ(-2deg)', transformStyle: 'preserve-3d' }}>
@@ -138,7 +159,7 @@ export default function Banner() {
                       key={active}
                       src={book.img}
                       alt={`${book.name} cover`}
-                      className="hero-fade block rounded-sm max-h-[400px] w-auto max-w-full object-cover"
+                      className="hero-fade block rounded-md max-h-[400px] w-auto max-w-full object-cover"
                       onError={(e) => { e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600"><rect fill="%23e8e4db" width="400" height="600"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-size="18">Cover</text></svg>'; }}
                     />
                     <span className="badge-font absolute bottom-3 left-3 bg-[#ED3833] text-white px-4 py-2 text-base tracking-wider">

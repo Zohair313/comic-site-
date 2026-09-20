@@ -56,8 +56,13 @@ export default function Bio() {
                 <h5 style={{ color: '#18181b', marginTop: '24px', marginBottom: '12px' }}>Connect with me:</h5>
                 <div className="d-flex gap-3 flex-wrap">
                   {socialLinks.map((link, idx) => (
-                    <a key={idx} href="#" onClick={(e) => e.preventDefault()} className="button-secondary">
-                      <i className={`${link.icon} me-2`}></i>{link.label}
+                    <a key={idx} href="#" onClick={(e) => e.preventDefault()} className="button-secondary" aria-label={link.label}>
+                      {link.icon === 'fa-brands fa-x-twitter' ? (
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style={{ marginRight: '0.5rem' }}><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                      ) : (
+                        <i className={`${link.icon} me-2`}></i>
+                      )}
+                      {link.label}
                     </a>
                   ))}
                 </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 
 const tickerItems = [
-  'ORIGINAL ARTWORKS & ANIMATIONS',
-  'IMMERSIVE STORYTELLING',
-  'READ, BOOKMARK, PURCHASE & SUBSCRIBE',
-  'MODERN PULP & HEROIC POP-ART',
-  'COMIXO DIGITAL COMICS',
+  'Original Artworks & Animations',
+  'Immersive Storytelling',
+  'Read, Bookmark, Purchase & Subscribe',
+  'Modern Pulp & Heroic Pop-Art',
+  'Comixo Digital Comics',
 ];
 
 function Strip() {

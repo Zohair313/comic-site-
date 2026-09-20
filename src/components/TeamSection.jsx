@@ -9,30 +9,23 @@ const creators = [
     initials: 'W',
     accent: '#ED3833',
     socials: [
-      { icon: 'fa-brands fa-instagram', url: 'https://instagram.com/wessley_stangle' },
-      { icon: 'fa-solid fa-envelope', url: 'mailto:Wolf.357.lord@gmail.com' },
+      { icon: 'fa-brands fa-instagram', url: 'https://instagram.com/wessley_stangle', label: 'Instagram' },
+      { icon: 'fa-solid fa-envelope', url: 'mailto:Wolf.357.lord@gmail.com', label: 'Email' },
     ]
   },
   {
     name: 'Rhapsody',
     role: 'Web Developer & Digital Artist',
     desc: 'Website engineering, UX design, and the digital assets that bring the studio online.',
-    img: 'images/rhapsody-placeholder.jpg',
+    img: 'images/custom/rhapsody-avatar.svg',
     initials: 'R',
     accent: '#879F84',
     socials: [
-      { icon: 'fa-brands fa-instagram', url: 'https://instagram.com/rhapsodys' },
-      { icon: 'fa-brands fa-x-twitter', url: 'https://x.com/Caternia_vt' },
+      { icon: 'fa-brands fa-instagram', url: 'https://instagram.com/rhapsodys', label: 'Instagram' },
+      { icon: 'fa-brands fa-x-twitter', url: 'https://x.com/Caternia_vt', label: 'X (Twitter)' },
     ]
   }
 ];
-
-function toggleCircle(e, on, solid) {
-  const el = e.currentTarget;
-  el.style.backgroundColor = on ? solid : '#4A3B32';
-  el.style.color = on ? '#fff' : '#e8e4db';
-  el.style.transform = on ? 'translateY(-4px)' : 'none';
-}
 
 export default function TeamSection() {
   return (
@@ -49,7 +42,7 @@ export default function TeamSection() {
         {/* Duo grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 justify-items-center">
           {creators.map((creator, idx) => (
-            <div key={idx} className="text-center">
+            <div key={idx} className="text-center h-full flex flex-col">
               {/* Circular profile with dropped shadow */}
               <div className="relative w-[190px] h-[190px] mx-auto">
                 <div className="absolute top-3 left-3 w-full h-full rounded-full bg-black/40"></div>
@@ -59,32 +52,46 @@ export default function TeamSection() {
                     alt={creator.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="190" height="190"><rect fill="%23e8e4db" width="190" height="190"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-size="72">' + creator.initials + '</text></svg>';
+                      e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="190" height="190"><rect fill="%234A3B32" width="190" height="190"/><circle cx="95" cy="95" r="70" fill="none" stroke="%23ED3833" stroke-width="4"/><text x="95" y="124" text-anchor="middle" font-family="Arial Black,Arial" font-size="84" font-weight="900" fill="%23ED3833">' + creator.initials + '</text></svg>';
                     }}
                   />
                 </div>
               </div>
 
-              <h4 className="display-font text-white text-3xl mt-6 mb-1">{creator.name}</h4>
+              <h3 className="display-font text-white text-3xl mt-6 mb-1 normal-case">{creator.name}</h3>
               <p className="badge-font text-sm font-bold tracking-widest uppercase mb-2" style={{ color: creator.accent }}>
                 {creator.role}
               </p>
               <p className="text-[#b9bec7] text-base leading-relaxed mb-6 max-w-[280px] mx-auto">{creator.desc}</p>
 
-              {/* Circular social triggers */}
-              <div className="flex justify-center gap-3.5">
+              {/* Labeled pill social triggers */}
+              <div className="flex justify-center gap-3.5 mt-auto pt-2">
                 {creator.socials.map((social, sIdx) => (
                   <a
                     key={sIdx}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={social.icon}
-                    className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#4a4f57] text-[#E8E4DB] text-[15px] transition-all bg-[#4A3B32]"
-                    onMouseEnter={(e) => toggleCircle(e, true, creator.accent)}
-                    onMouseLeave={(e) => toggleCircle(e, false, creator.accent)}
+                    aria-label={social.label}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold text-sm transition-colors"
+                    style={{ backgroundColor: 'transparent', border: '2px solid rgba(232,228,219,0.35)' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = creator.accent;
+                      e.currentTarget.style.borderColor = creator.accent;
+                      e.currentTarget.style.color = '#fff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.borderColor = 'rgba(232,228,219,0.35)';
+                      e.currentTarget.style.color = '#fff';
+                    }}
                   >
-                    <i className={social.icon}></i>
+                    {social.icon === 'fa-brands fa-x-twitter' ? (
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    ) : (
+                      <i className={social.icon}></i>
+                    )}
+                    {social.label}
                   </a>
                 ))}
               </div>

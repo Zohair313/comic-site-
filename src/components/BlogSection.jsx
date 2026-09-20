@@ -58,7 +58,7 @@ export default function BlogSection() {
             </div>
 
             {/* Comic strip image side */}
-            <div className="relative rounded-lg overflow-hidden min-h-[280px] bg-[#F5F2EB]">
+            <div className="relative rounded-md overflow-hidden min-h-[280px] bg-[#F5F2EB]">
               <img
                 src="images/Comic story pages5.jpg"
                 alt="Hand-drawn comic page preview"
