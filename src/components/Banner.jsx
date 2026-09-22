@@ -14,7 +14,7 @@ export default function Banner() {
     <section
       id="banner"
       className="relative isolate bg-[#F5F2EB] overflow-hidden min-h-svh bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/background full page.jpg')" }}
+      style={{ backgroundImage: "url('images/background full page.jpg')" }}
     >
       {/* Dark overlay so text stays readable over the background image */}
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-black/70 via-black/45 to-black/25" aria-hidden="true"></div>
