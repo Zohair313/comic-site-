@@ -29,7 +29,7 @@ export default function Marquee() {
         backgroundColor: '#ED3833',
         borderTop: '3px solid #4A3B32',
         borderBottom: '3px solid #4A3B32',
-        padding: '14px 0',
+        padding: '22px 0',
         overflow: 'hidden'
       }}
     >

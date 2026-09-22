@@ -31,7 +31,7 @@ export default function ProcessSection() {
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] uppercase mb-3">The Process</p>
-          <h2 className="display-font font-black text-[#4A3B32] text-6xl md:text-7xl">
+          <h2 className="display-font font-black text-[#4A3B32] text-5xl md:text-6xl">
             The Hand-Drawn Workflow
           </h2>
           <p className="mt-3 text-gray-500 text-lg max-w-[560px] mx-auto">
@@ -54,12 +54,12 @@ export default function ProcessSection() {
                 <i className={`${step.icon} text-3xl text-[#ED3833]`}></i>
               </div>
 
-              <h3 className="display-font text-[#4A3B32] text-3xl mb-3 normal-case">{step.title}</h3>
+              <h3 className="display-font text-[#4A3B32] text-3xl mb-3">{step.title}</h3>
               <p className="text-gray-500 text-base leading-relaxed mb-4 flex-grow">{step.desc}</p>
 
               <div className="flex flex-wrap gap-2">
                 {step.points.map((point, pIdx) => (
-                  <span key={pIdx} className="badge-font bg-[#F5F2EB] text-[#4A3B32] text-xs font-extrabold tracking-wider uppercase px-3.5 py-2 rounded-full">
+                  <span key={pIdx} className="badge-font bg-[#F5F2EB] text-[#4A3B32] text-xs font-extrabold tracking-wider px-3.5 py-2 rounded-full">
                     {point}
                   </span>
                 ))}

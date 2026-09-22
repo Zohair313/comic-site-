@@ -58,14 +58,14 @@ export default function TeamSection() {
                 </div>
               </div>
 
-              <h3 className="display-font text-white text-3xl mt-6 mb-1 normal-case">{creator.name}</h3>
-              <p className="badge-font text-sm font-bold tracking-widest uppercase mb-2" style={{ color: creator.accent }}>
+              <h3 className="display-font text-white text-3xl mt-6 mb-1">{creator.name}</h3>
+              <p className="badge-font text-sm font-bold tracking-widest mb-2" style={{ color: creator.accent }}>
                 {creator.role}
               </p>
               <p className="text-[#b9bec7] text-base leading-relaxed mb-6 max-w-[280px] mx-auto">{creator.desc}</p>
 
-              {/* Labeled pill social triggers */}
-              <div className="flex justify-center gap-3.5 mt-auto pt-2">
+              {/* Social buttons — solid primary / outline secondary, matching section language elsewhere */}
+              <div className="flex justify-center gap-3 mt-auto pt-2">
                 {creator.socials.map((social, sIdx) => (
                   <a
                     key={sIdx}
@@ -73,18 +73,9 @@ export default function TeamSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold text-sm transition-colors"
-                    style={{ backgroundColor: 'transparent', border: '2px solid rgba(232,228,219,0.35)' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = creator.accent;
-                      e.currentTarget.style.borderColor = creator.accent;
-                      e.currentTarget.style.color = '#fff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.borderColor = 'rgba(232,228,219,0.35)';
-                      e.currentTarget.style.color = '#fff';
-                    }}
+                    className={sIdx === 0
+                      ? 'inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-full bg-[#ED3833] text-white hover:bg-[#c92825] transition-colors'
+                      : 'inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-full border-2 border-[#ED3833] text-[#ED3833] hover:bg-[#ED3833] hover:text-white transition-colors'}
                   >
                     {social.icon === 'fa-brands fa-x-twitter' ? (
                       <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>

@@ -26,7 +26,7 @@ export default function BlogSection() {
                 </span>
               </div>
 
-              <h3 className="display-font text-[#4A3B32] text-3xl md:text-4xl mb-4">
+              <h3 className="display-font text-[#4A3B32] text-3xl mb-4">
                 Intro Post: A New Adventure Begins
               </h3>
               <p className="text-gray-500 text-base leading-relaxed flex-grow">
@@ -73,7 +73,7 @@ export default function BlogSection() {
         </div>
 
         <div className="text-center mt-8">
-          <Link to="/lore" className="inline-flex items-center px-6 py-3 text-base rounded-md border-2 border-[#E8E4DB] text-[#E8E4DB] font-bold hover:bg-[#E8E4DB] hover:text-[#4A3B32] transition-colors">
+          <Link to="/lore" className="inline-flex items-center px-6 py-3 text-base rounded-md border-2 border-[#ED3833] bg-[#ED3833] text-white font-bold hover:bg-[#c92825] hover:border-[#c92825] transition-colors">
             View All Updates
           </Link>
         </div>

@@ -28,7 +28,7 @@ export default function AboutSection() {
           {/* Right — about copy */}
           <div>
             <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] uppercase mb-4">About Me</p>
-            <h2 className="display-font font-black text-[#4A3B32] text-6xl md:text-7xl mb-6">
+            <h2 className="display-font font-black text-[#4A3B32] text-5xl md:text-6xl mb-6">
               Wessley.
             </h2>
 

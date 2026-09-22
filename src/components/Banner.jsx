@@ -1,6 +1,5 @@
 ﻿import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import EmbersParticles from './EmbersParticles';
 import Marquee from './Marquee';
 
 const books = [
@@ -55,9 +54,11 @@ export default function Banner() {
   const book = books[active];
 
   return (
-    <section id="banner" className="relative isolate bg-[#F5F2EB] overflow-hidden h-svh">
-      {/* Battlefield ash — dark embers drifting down behind the slider content */}
-      <EmbersParticles className="absolute inset-0 z-0 w-full h-full pointer-events-none" />
+    <section
+      id="banner"
+      className="relative isolate bg-[#F5F2EB] overflow-hidden h-svh bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/background full page.jpg')" }}
+    >
 
       {/* Red marquee pinned to the bottom of the hero */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
