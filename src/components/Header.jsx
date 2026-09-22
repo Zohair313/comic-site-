@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const menuBtnRef = useRef(null);
+  const closeBtnRef = useRef(null);
   const getNavClass = (path) => "nav-link" + (location.pathname === path ? " active" : "");
 
   const links = [
@@ -20,6 +22,15 @@ export default function Header() {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
+  useEffect(() => {
+    if (open) {
+      closeBtnRef.current?.focus();
+    } else {
+      const t = setTimeout(() => menuBtnRef.current?.focus(), 350);
+      return () => clearTimeout(t);
+    }
+  }, [open]);
+
   const closeMenu = () => setOpen(false);
 
   return (
@@ -33,6 +44,7 @@ export default function Header() {
 
           <button
             type="button"
+            ref={menuBtnRef}
             className="mobile-nav border-0 px-0 bg-transparent"
             aria-label="Open menu"
             aria-expanded={open}
@@ -64,8 +76,12 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* Custom mobile drawer (no Bootstrap dependency) */}
-      <div className={`fixed inset-0 z-[100] ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
+      {/* Custom mobile drawer (no Bootstrap dependency); inert blocks focus & tab when closed */}
+      <div
+        className={`fixed inset-0 z-[100] ${open ? '' : 'pointer-events-none'}`}
+        aria-hidden={!open}
+        inert={!open}
+      >
         {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
@@ -86,6 +102,7 @@ export default function Header() {
             </span>
             <button
               type="button"
+              ref={closeBtnRef}
               onClick={closeMenu}
               aria-label="Close menu"
               className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-600 hover:bg-[#ED3833] hover:text-white transition-colors"
