@@ -9,6 +9,7 @@ export default function Header() {
     { label: 'HOME', to: '/' },
     { label: 'ABOUT', to: '/bio' },
     { label: 'READ COMIC', to: '/reader' },
+    { label: 'ART', to: '/art' },
     { label: 'CHARACTERS', to: '/lore' },
     { label: 'CONTACT', to: '/support' },
   ];

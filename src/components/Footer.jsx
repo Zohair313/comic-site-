@@ -29,7 +29,6 @@ export default function Footer() {
           <div className="col-lg-3 col-md-6">
             <h3 className="badge-font text-white text-xs font-extrabold tracking-widest uppercase mb-5" style={{ fontSize: 'var(--gf-fs-sm)' }}>Store &amp; Support</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <Link to="/shop" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Merch Shop</Link>
               <Link to="/support" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Support Creator (Tip Jar)</Link>
               <Link to="/lore" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Updates & Blog</Link>
             </div>
@@ -39,8 +38,8 @@ export default function Footer() {
           <div className="col-lg-3 col-md-6">
             <h3 className="badge-font text-white text-xs font-extrabold tracking-widest uppercase mb-5" style={{ fontSize: 'var(--gf-fs-sm)' }}>Legal</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)' }}>Privacy Policy</a>
-              <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)' }}>Terms & Conditions</a>
+              <Link to="/privacy-policy" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Privacy Policy</Link>
+              <Link to="/terms" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Terms & Conditions</Link>
             </div>
           </div>
 
