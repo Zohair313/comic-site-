@@ -6,20 +6,10 @@ export default function AboutSection() {
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
 
-          {/* Left — portrait + overlaid red badges */}
+          {/* Left — portrait */}
           <div className="relative flex justify-center">
-            {/* Stacked red badges anchored top-left */}
-            <div className="absolute top-0 left-0 z-10 flex flex-col gap-2" style={{ transform: 'translate(0, -8px)' }}>
-              <span className="badge-font inline-flex items-center gap-1.5 bg-[#ED3833] text-white text-sm font-extrabold tracking-widest uppercase px-5 py-2 rounded-full shadow-lg shadow-[#ED3833]/40">
-                <i className="fa-solid fa-pen-nib"></i>100% Hand-Drawn
-              </span>
-              <span className="badge-font inline-flex items-center gap-1.5 bg-[#ED3833] text-white text-sm font-extrabold tracking-widest uppercase px-5 py-2 rounded-full shadow-lg shadow-[#ED3833]/40">
-                <i className="fa-solid fa-book"></i>500+ Pages
-              </span>
-            </div>
-
             <img
-              src="images/custom/creator_bio_1787177588804.jpg"
+              src="images/author img.jpeg"
               alt="Wessley at his drawing tablet"
               className="w-72 sm:w-80 lg:w-96 aspect-[3/4] rounded-full object-cover shadow-2xl block"
             />

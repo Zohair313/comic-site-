@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import NewComicsSection from '../components/NewComicsSection';
 
 export default function Reader() {
   const [selectedChapter, setSelectedChapter] = useState(1);
@@ -31,7 +30,7 @@ export default function Reader() {
 
   return (
     <div className="min-h-screen font-sans pb-16">
-      <section id="new-comics" className="pt-5">
+      <section id="new-comics" className="pt-20">
         <div className="container">
           <div className="row">
             <div className="section-title t-white">
@@ -48,34 +47,56 @@ export default function Reader() {
 
       <section className="pb-5">
         <div className="container">
-          <div className="row mb-4 align-items-center">
-            <div className="col-md-6">
-              <h3 style={{ color: '#333', fontSize: '1.3rem', fontWeight: 'bold' }}>Chapter Directory</h3>
-              <select
-                className="form-select mt-2"
-                value={selectedChapter}
-                onChange={(e) => setSelectedChapter(Number(e.target.value))}
-                style={{ border: '1px solid #d1d5db', maxWidth: '400px' }}
-              >
-                {chapters.map(ch => (
-                  <option key={ch.id} value={ch.id}>{ch.title} ({ch.pages} pages)</option>
-                ))}
-              </select>
+          {/* Control Bar: Chapter Directory + View Mode */}
+          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 my-6 max-w-[1400px] mx-auto px-1 sm:px-6">
+
+            {/* Left — Chapter Directory */}
+            <div className="flex flex-col gap-1.5 w-full sm:w-auto">
+              <label htmlFor="chapter-select" className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+                Chapter Directory
+              </label>
+              <div className="relative w-full sm:w-80">
+                <select
+                  id="chapter-select"
+                  value={selectedChapter}
+                  onChange={(e) => setSelectedChapter(Number(e.target.value))}
+                  className="w-full appearance-none border border-zinc-300 bg-white rounded-lg shadow-sm pl-4 pr-10 py-2.5 text-sm font-medium text-zinc-800 outline-none transition focus:border-[#ED3833] focus:ring-2 focus:ring-[#ED3833]/20 hover:border-zinc-400 cursor-pointer"
+                >
+                  {chapters.map(ch => (
+                    <option key={ch.id} value={ch.id}>{ch.title} ({ch.pages} pages)</option>
+                  ))}
+                </select>
+                <i className="fa-solid fa-chevron-down pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 text-xs"></i>
+              </div>
             </div>
-            <div className="col-md-6 text-md-end mt-3 mt-md-0">
-              <span className="d-none d-sm-inline" style={{ color: '#a1a1aa', marginRight: '12px', fontWeight: 'bold' }}>View Mode:</span>
-              <div className="btn-group w-100 w-sm-auto" role="group">
+
+            {/* Right — View Mode segmented pills */}
+            <div className="flex items-center gap-3 self-start sm:self-auto">
+              <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 whitespace-nowrap">View Mode:</span>
+              <div
+                className="inline-flex items-center gap-1 rounded-full border border-zinc-300 bg-white p-1 shadow-sm"
+                role="group"
+                aria-label="Reading view mode"
+              >
                 <button
                   type="button"
-                  className={`btn ${viewMode === 'vertical' ? 'button-primary' : 'button-secondary'}`}
                   onClick={() => setViewMode('vertical')}
+                  className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
+                    viewMode === 'vertical'
+                      ? 'bg-[#ED3833] text-white shadow'
+                      : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100'
+                  }`}
                 >
                   <i className="fa-solid fa-arrows-left-right"></i> Vertical
                 </button>
                 <button
                   type="button"
-                  className={`btn ${viewMode === 'book' ? 'button-primary' : 'button-secondary'}`}
                   onClick={() => setViewMode('book')}
+                  className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
+                    viewMode === 'book'
+                      ? 'bg-[#ED3833] text-white shadow'
+                      : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100'
+                  }`}
                 >
                   <i className="fa-solid fa-book-open"></i> Side-by-Side
                 </button>
@@ -133,8 +154,6 @@ export default function Reader() {
           </div>
         </div>
       </section>
-
-      <NewComicsSection />
     </div>
   );
 }
