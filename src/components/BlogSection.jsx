@@ -8,14 +8,14 @@ export default function BlogSection() {
         {/* Section header */}
         <div className="text-center mb-10">
           <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.25em] uppercase mb-3">Studio Blog</p>
-          <h2 className="display-font font-black text-white text-5xl md:text-6xl">
+          <h2 className="display-font font-black text-white text-4xl sm:text-5xl md:text-6xl">
             Behind the Scenes &amp; Updates<span className="text-[#ED3833]">.</span>
           </h2>
         </div>
 
         {/* Featured update card — constrained width */}
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8 items-stretch">
 
             {/* Text side */}
             <div className="flex flex-col">

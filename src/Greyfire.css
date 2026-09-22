@@ -193,3 +193,18 @@ a:hover {
   box-shadow: 0 0 0 3px rgba(237, 56, 51, 0.25);
 }
 
+/* =============================================
+   RESPONSIVE TEMPLATE OVERRIDES
+============================================= */
+@media (max-width: 767px) {
+  .section-title h3 { font-size: 34px !important; }
+  .section-title span { font-size: 17px; padding-left: 40px; }
+  .section-title span::after { width: 28px; }
+  .section-title p { padding-right: 0; }
+}
+
+@media (max-width: 575px) {
+  .section-title h3 { font-size: 27px !important; }
+  .comic-item-details h3 { font-size: 15px; }
+}
+

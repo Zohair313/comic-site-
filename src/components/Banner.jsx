@@ -13,7 +13,7 @@ export default function Banner() {
   return (
     <section
       id="banner"
-      className="relative isolate bg-[#F5F2EB] overflow-hidden h-svh bg-cover bg-center"
+      className="relative isolate bg-[#F5F2EB] overflow-hidden min-h-svh bg-cover bg-center"
       style={{ backgroundImage: "url('/images/background full page.jpg')" }}
     >
       {/* Dark overlay so text stays readable over the background image */}
@@ -25,8 +25,8 @@ export default function Banner() {
       </div>
 
       {/* Uniform section container */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-10 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
 
           {/* Left column — featured book info */}
           <div>
@@ -36,7 +36,7 @@ export default function Banner() {
 
             <div>
               <div className="min-h-[7.5rem] md:min-h-[10rem] flex flex-col justify-end">
-                <h1 className="display-font font-black text-white text-6xl md:text-8xl leading-none mb-5">
+                <h1 className="display-font font-black text-white text-5xl sm:text-6xl md:text-8xl leading-none mb-5">
                   {book.name}
                 </h1>
               </div>

@@ -70,8 +70,8 @@ export default function Reader() {
               </div>
             </div>
 
-            {/* Right — View Mode segmented pills */}
-            <div className="flex items-center gap-3 self-start sm:self-auto">
+            {/* Right — View Mode segmented pills (hidden on mobile) */}
+            <div className="hidden sm:flex items-center gap-3 self-start sm:self-auto">
               <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 whitespace-nowrap">View Mode:</span>
               <div
                 className="inline-flex items-center gap-1 rounded-full border border-zinc-300 bg-white p-1 shadow-sm"
