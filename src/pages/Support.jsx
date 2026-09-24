@@ -1,26 +1,10 @@
 import React from 'react';
+import { useSiteData } from '@/context/SiteDataContext';
 
 export default function Support() {
-  const socials = [
-    {
-      label: 'Instagram',
-      handle: '@Wessley',
-      icon: 'fa-brands fa-instagram',
-      href: 'https://instagram.com/wessley_stangle',
-      external: true,
-      badgeClass: 'bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]',
-      hoverClass: 'bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]',
-    },
-    {
-      label: 'Email',
-      handle: 'info@greyfirestudio.com',
-      icon: 'fa-solid fa-envelope',
-      href: 'mailto:info@greyfirestudio.com',
-      external: false,
-      badgeClass: 'bg-gradient-to-br from-[#ED3833] to-[#c92825]',
-      hoverClass: 'bg-gradient-to-br from-[#ED3833] to-[#c92825]',
-    },
-  ];
+  const { data } = useSiteData();
+  const contact = data.contact;
+  const socials = contact.socials;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +17,7 @@ export default function Support() {
       'Message:',
       data.get('message'),
     ].join('\n');
-    window.location.href = `mailto:info@greyfirestudio.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -41,7 +25,7 @@ export default function Support() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-14">
-          <h1 className="display-font italic font-black text-5xl md:text-7xl text-zinc-900 tracking-tight">CONTACT PAGE</h1>
+          <h1 className="display-font italic font-black text-5xl md:text-7xl text-zinc-900 tracking-tight">{contact.heading}</h1>
           <div className="mx-auto mt-4 h-1.5 w-24 rounded-full bg-[#ED3833]"></div>
         </div>
 
@@ -59,7 +43,7 @@ export default function Support() {
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.3em] text-[#608066] mb-1">// Get In Touch</p>
                 <h2 className="display-font italic font-black text-3xl md:text-4xl text-zinc-900 leading-none">Email Inquiry Form</h2>
-                <p className="text-zinc-600 italic mt-2">Send your inquiry directly to our email address.</p>
+                <p className="text-zinc-600 italic mt-2">{contact.formNote}</p>
               </div>
             </div>
 

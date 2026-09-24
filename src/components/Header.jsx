@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useSiteData } from '@/context/SiteDataContext';
 
 export default function Header() {
+  const { data } = useSiteData();
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const menuBtnRef = useRef(null);
   const closeBtnRef = useRef(null);
-  const getNavClass = (path) => "nav-link" + (location.pathname === path ? " active" : "");
 
   const links = [
     { label: 'HOME', to: '/' },
@@ -35,40 +36,50 @@ export default function Header() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg sticky-top" style={{ backgroundColor: '#f5f2eb', padding: '14px 0', borderBottom: '1px solid #e8e4db' }}>
-        <div className="container">
-          <Link className="navbar-brand d-flex align-items-center gap-2" to="/" style={{ fontWeight: '900', fontSize: 'clamp(1.1rem, 4.5vw, 24px)', letterSpacing: '-0.5px', color: '#111' }}>
+      <nav
+        className="fixed top-0 left-0 right-0 w-full"
+        style={{ backgroundColor: '#f5f2eb', padding: '14px 0', borderBottom: '1px solid #e8e4db', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', zIndex: 1030 }}
+      >
+        <div className="relative flex items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+          {/* LEFT — brand pinned to far left */}
+          <Link className="navbar-brand flex-none flex items-center gap-2" to="/" style={{ fontWeight: '900', fontSize: 'clamp(1.1rem, 4.5vw, 24px)', letterSpacing: '-0.5px', color: '#111' }}>
             <i className="fa-solid fa-bolt" style={{ color: '#ED3833' }}></i>
-            Greyfire Studio<span style={{ color: '#ED3833', fontSize: 'clamp(1.4rem, 5vw, 28px)', lineHeight: '0.6', marginLeft: '1px' }}>.</span>
+            {data.site.name}<span style={{ color: '#ED3833', fontSize: 'clamp(1.4rem, 5vw, 28px)', lineHeight: '0.6', marginLeft: '1px' }}>.</span>
           </Link>
 
-          <button
-            type="button"
-            ref={menuBtnRef}
-            className="mobile-nav border-0 px-0 bg-transparent"
-            aria-label="Open menu"
-            aria-expanded={open}
-            onClick={() => setOpen(true)}
-          >
-            <i className="fa-solid fa-bars" style={{ fontSize: '26px', color: '#111' }}></i>
-          </button>
+          {/* CENTER — nav links absolute-centered (desktop only) */}
+          <ul className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 m-0 p-0">
+            {links.map((link, idx) => (
+              <li className="list-none" key={idx}>
+                <Link
+                  className={`nav-link whitespace-nowrap text-[13px] tracking-wider uppercase transition-colors duration-200 ${
+                    location.pathname === link.to ? 'text-[#ED3833]' : 'text-[#6b7280] hover:text-[#ED3833]'
+                  }`}
+                  to={link.to}
+                  style={{ fontWeight: '800', padding: '6px 0' }}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-          <div className="desktop-nav">
-            <ul className="navbar-nav mb-2 mt-0 mb-lg-0 me-4 align-items-center" style={{ gap: '22px', fontWeight: '700', fontSize: '13px', letterSpacing: '1px' }}>
-              {links.map((link, idx) => (
-                <li className="nav-item" key={idx}>
-                  <Link className={getNavClass(link.to)} to={link.to} style={{ color: '#6b7280', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ED3833'} onMouseLeave={(e) => e.currentTarget.style.color = '#6b7280'}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* RIGHT — mobile toggle + CTA pinned to far right */}
+          <div className="flex-none flex items-center gap-3">
+            <button
+              type="button"
+              ref={menuBtnRef}
+              className="lg:hidden flex items-center justify-center border-0 bg-transparent px-1"
+              aria-label="Open menu"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+            >
+              <i className="fa-solid fa-bars" style={{ fontSize: '26px', color: '#111' }}></i>
+            </button>
+
             <Link
               to="/reader"
-              className="btn text-white rounded-pill px-4 py-2"
-              style={{ backgroundColor: '#ED3833', fontWeight: '800', fontSize: '13px', letterSpacing: '1.5px', textTransform: 'uppercase', border: 'none', transition: 'all 0.2s ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#c92825'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ED3833'; e.currentTarget.style.transform = 'none'; }}
+              className="hidden lg:inline-flex items-center rounded-lg bg-[#ED3833] px-4 py-2 text-[13px] font-extrabold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#c92825] hover:-translate-y-0.5"
             >
               Start Reading
             </Link>
@@ -98,7 +109,7 @@ export default function Header() {
           {/* Panel header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-[#e8e4db]">
             <span className="font-black" style={{ fontSize: '1.05rem', color: '#111' }}>
-              <i className="fa-solid fa-bolt mr-1.5" style={{ color: '#ED3833' }}></i>Greyfire Studio<span style={{ color: '#ED3833' }}>.</span>
+              <i className="fa-solid fa-bolt mr-1.5" style={{ color: '#ED3833' }}></i>{data.site.name}<span style={{ color: '#ED3833' }}>.</span>
             </span>
             <button
               type="button"

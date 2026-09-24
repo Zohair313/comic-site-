@@ -9,7 +9,7 @@ const creators = [
     initials: 'W',
     accent: '#ED3833',
     socials: [
-      { icon: 'fa-brands fa-instagram', url: 'https://instagram.com/wessley_stangle', label: 'Instagram' },
+      { icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/vtube.rrhapsody', label: 'Instagram' },
       { icon: 'fa-solid fa-envelope', url: 'mailto:Wolf.357.lord@gmail.com', label: 'Email' },
     ]
   },
@@ -21,7 +21,7 @@ const creators = [
     initials: 'R',
     accent: '#879F84',
     socials: [
-      { icon: 'fa-brands fa-instagram', url: 'https://instagram.com/rhapsodys', label: 'Instagram' },
+      { icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/vtube.rrhapsody', label: 'Instagram' },
       { icon: 'fa-brands fa-x-twitter', url: 'https://x.com/Caternia_vt', label: 'X (Twitter)' },
     ]
   }

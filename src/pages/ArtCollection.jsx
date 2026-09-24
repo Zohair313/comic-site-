@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const artworks = [
-  { img: 'images/hero-comic-cover.jpg', title: 'Skyhawk #1', category: 'Covers', tag: 'Full Cover Art' },
-  { img: 'images/comic cover img.jpg', title: 'Blue Sky 2', category: 'Covers', tag: 'Next Chapter' },
-  { img: 'images/skyhawk_landscape.jpg', title: 'The Ashen Skies', category: 'Scenes', tag: 'Landscape Illustration' },
-  { img: 'images/custom/char_kaelen_1787177600102.jpg', title: 'Kaelen', category: 'Characters', tag: 'Protagonist' },
-  { img: 'images/custom/char_lyra_1787177611766.jpg', title: 'Lyra', category: 'Characters', tag: 'Master Mage' },
-  { img: 'images/custom/char_draken_1787177625172.jpg', title: 'Draken', category: 'Characters', tag: 'The Antagonist' },
-  { img: 'images/custom/char_elara_1787177638388.jpg', title: 'Elara', category: 'Characters', tag: 'The Guide' },
-  { img: 'images/custom/comic_page_1_1787177649462.jpg', title: 'The Awakening', category: 'Pages', tag: 'Story Page' },
-  { img: 'images/custom/comic_page_2_1787177662562.jpg', title: 'Into the Flames', category: 'Pages', tag: 'Story Page' },
-  { img: 'images/Comic story pages.jpg', title: 'Panel Study I', category: 'Pages', tag: 'Action Layout' },
-  { img: 'images/Comic story pages2.jpg', title: 'Panel Study II', category: 'Pages', tag: 'Action Layout' },
-  { img: 'images/intro_post.jpeg', title: 'Studio Announcement', category: 'Scenes', tag: 'Release Art' },
-];
-
-const categories = ['All', 'Covers', 'Characters', 'Pages', 'Scenes'];
+import { useSiteData } from '@/context/SiteDataContext';
 
 export default function ArtCollection() {
+  const { data } = useSiteData();
+  const art = data.art;
+  const artworks = art.artworks;
+  const categories = art.categories;
+
   const [category, setCategory] = useState('All');
   const [selected, setSelected] = useState(null);
 
@@ -41,11 +30,11 @@ export default function ArtCollection() {
         {/* Header */}
         <div className="text-center mb-10">
           <p className="badge-font text-[#ED3833] text-sm font-extrabold tracking-[0.3em] uppercase mb-3">
-            <i className="fa-solid fa-palette mr-2"></i>Greyfire Studio
+            <i className="fa-solid fa-palette mr-2"></i>{art.eyebrow}
           </p>
-          <h1 className="display-font italic font-black text-5xl md:text-7xl text-zinc-900 tracking-tight">Art Collection</h1>
+          <h1 className="display-font italic font-black text-5xl md:text-7xl text-zinc-900 tracking-tight">{art.heading}</h1>
           <p className="text-zinc-600 italic max-w-xl mx-auto mt-4 leading-relaxed">
-            Every panel, sketch, and cover — drawn by hand, panel by panel. Browse the gallery below.
+            {art.description}
           </p>
           <div className="mx-auto mt-5 h-1.5 w-24 rounded-full bg-[#ED3833]"></div>
         </div>
@@ -106,12 +95,12 @@ export default function ArtCollection() {
 
         {/* CTA */}
         <div className="text-center mt-14">
-          <p className="text-zinc-600 italic mb-4">Want more art drops, sketches and process videos?</p>
+          <p className="text-zinc-600 italic mb-4">{art.ctaText}</p>
           <Link
             to="/bio"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#4A3B32] text-white font-extrabold uppercase tracking-widest text-sm hover:bg-[#5d4a3f] transition-colors"
           >
-            <i className="fa-solid fa-palette"></i> About the Artist
+            <i className="fa-solid fa-palette"></i> {art.ctaLabel}
           </Link>
         </div>
       </div>

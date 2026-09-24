@@ -1,17 +1,10 @@
 import React from 'react';
+import { useSiteData } from '@/context/SiteDataContext';
 
-const tickerItems = [
-  'Original Artworks & Animations',
-  'Immersive Storytelling',
-  'Read, Bookmark, Purchase & Subscribe',
-  'Modern Pulp & Heroic Pop-Art',
-  'Comixo Digital Comics',
-];
-
-function Strip() {
+function Strip({ items }) {
   return (
     <div className="gf-marquee-strip">
-      {tickerItems.map((item, idx) => (
+      {items.map((item, idx) => (
         <React.Fragment key={idx}>
           <span className="gf-marquee-item">{item}</span>
           <i className="gf-marquee-spark">✦</i>
@@ -22,6 +15,8 @@ function Strip() {
 }
 
 export default function Marquee() {
+  const { data } = useSiteData();
+  const items = (data.marquee?.items?.length ? data.marquee.items : ['Greyfire Studio']);
   return (
     <section
       aria-label="Greyfire Studio highlights"
@@ -35,8 +30,8 @@ export default function Marquee() {
     >
       <div className="gf-marquee">
         <div className="gf-marquee-track">
-          <Strip />
-          <Strip />
+          <Strip items={items} />
+          <Strip items={items} />
         </div>
       </div>
     </section>

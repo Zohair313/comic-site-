@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Bio() {
   const socialLinks = [
-    { icon: 'fa-brands fa-instagram', label: 'Instagram', href: 'https://instagram.com/wessley_stangle', external: true },
+    { icon: 'fa-brands fa-instagram', label: 'Instagram', href: 'https://www.instagram.com/vtube.rrhapsody', external: true },
     { icon: 'fa-solid fa-envelope', label: 'Email', href: 'mailto:Wolf.357.lord@gmail.com' },
   ];
 

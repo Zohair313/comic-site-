@@ -9,7 +9,7 @@ const products = [
     alt: 'Blue Sky 1 Comic Cover',
     tags: ['100% Hand-Drawn', '100 Pages'],
     cta: { to: '/reader', text: 'Read Now', icon: 'fa-solid fa-book-open', solid: true },
-    ctaSecondary: { to: '/shop', text: 'Buy Physical', icon: 'fa-solid fa-cart-shopping', solid: false },
+    ctaSecondary: { to: '/art', text: 'Buy Physical', icon: 'fa-solid fa-cart-shopping', solid: false },
   },
   {
     title: '50-Page Art Book',
@@ -25,7 +25,7 @@ const products = [
     img: 'images/custom/char_kaelen_1787177600102.jpg',
     alt: 'Collectible Character Cards',
     tags: ['Character Stats', 'Lore Guide'],
-    cta: { to: '/shop', text: 'Get Card Set', icon: 'fa-solid fa-layer-group', solid: true },
+    cta: { to: '/art', text: 'Get Card Set', icon: 'fa-solid fa-layer-group', solid: true },
   },
 ];
 

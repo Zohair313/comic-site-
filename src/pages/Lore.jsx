@@ -1,14 +1,12 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useSiteData } from '@/context/SiteDataContext';
 
 export default function Lore() {
-  const characters = [
-    { name: 'Kaelen', role: 'The Protagonist', desc: 'A young warrior with a mysterious past and a burning desire for justice. He wields the Flame of Aether, an ancient power thought lost forever.', img: 'images/custom/char_kaelen_1787177600102.jpg' },
-    { name: 'Lyra', role: 'Master Mage', desc: 'A brilliant tactician who wields elemental magic with devastating precision. She is the last of the Starweavers, a forgotten order of sorcerers.', img: 'images/custom/char_lyra_1787177611766.jpg' },
-    { name: 'Draken', role: 'The Antagonist', desc: 'A ruthless warlord seeking to conquer the fractured realms. His power comes from corrupted Aether, twisting the natural order.', img: 'images/custom/char_draken_1787177625172.jpg' },
-    { name: 'Elara', role: 'The Guide', desc: 'An ancient spirit trapped in human form, guiding Kaelen on his journey. She remembers the world before the Great Cataclysm.', img: 'images/custom/char_elara_1787177638388.jpg' },
-  ];
+  const { data } = useSiteData();
+  const lore = data.lore;
+  const characters = lore.characters;
 
   return (
     <div className="min-h-screen text-zinc-900 font-sans pb-16">
@@ -17,10 +15,10 @@ export default function Lore() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4 text-[#879F84] border-[#879F84]/30">
-              Character Bios
+              {lore.badge}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900">
-              Meet the Core Cast
+              {lore.heading}
             </h2>
           </div>
 

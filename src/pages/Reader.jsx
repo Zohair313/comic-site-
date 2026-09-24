@@ -1,32 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSiteData } from '@/context/SiteDataContext';
 
 export default function Reader() {
+  const { data } = useSiteData();
+  const reader = data.reader;
   const [selectedChapter, setSelectedChapter] = useState(1);
   const [viewMode, setViewMode] = useState('book');
 
-  const chapters = [
-    { id: 1, title: 'Chapter 1: The Awakening', pages: 3 },
-    { id: 2, title: 'Chapter 2: Flames of the Past', pages: 4 },
-    { id: 3, title: 'Chapter 3: Journey Begins', pages: 3 },
-    { id: 4, title: 'Chapter 4: Dark Alliance', pages: 5 },
-    { id: 5, title: 'Chapter 5: The Final Stand', pages: 4 },
-  ];
-
-  // Dummy pages for a chapter
-  const pages = [
-    'images/Comic story pages.jpg',
-    'images/Comic story pages1.jpg',
-    'images/Comic story pages2.jpg',
-    'images/Comic story pages3.jpg',
-    'images/Comic story pages4.jpg',
-    'images/Comic story pages5.jpg',
-    'images/Comic story pages6.jpg',
-    'images/Comic story pages7.jpg',
-    'images/Comic story pages8.jpg',
-    'images/Comic story pages9.jpg',
-    'images/Comic story pages10.jpg'
-  ];
+  const chapters = reader.chapters;
+  const pages = reader.pages;
 
   return (
     <div className="min-h-screen font-sans pb-16">
@@ -36,8 +19,7 @@ export default function Reader() {
             <div className="section-title t-white">
               <div className="row">
                 <div className="col-lg-6 m-auto text-center">
-                  <span>Comic Reader</span>
-                  <h3>Read Comics Online.</h3>
+                  <h3>{reader.heading}</h3>
                 </div>
               </div>
             </div>
@@ -142,13 +124,8 @@ export default function Reader() {
 
           <div className="row mt-5">
             <div className="col-lg-6">
-              <Link to="/comics" className="button-secondary">
-                <i className="fa-solid fa-arrow-left me-2"></i>Back to Comics
-              </Link>
-            </div>
-            <div className="col-lg-6 text-end">
-              <Link to="/support" className="button-primary">
-                Support the Creator<i className="fa-solid fa-arrow-right ms-2"></i>
+              <Link to={reader.backTo} className="button-secondary">
+                <i className="fa-solid fa-arrow-left me-2"></i>{reader.backLabel}
               </Link>
             </div>
           </div>
