@@ -1,4 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { isSupabaseConfigured } from '@/lib/supabase';
+import { fetchSiteContent, saveSiteContent, deepMerge } from '@/lib/db';
 
 const STORAGE_KEY = 'gf_site_data_v2';
 
@@ -149,10 +151,10 @@ export const defaultData = {
   },
 };
 
-function loadData() {
+function loadLocal() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return { ...defaultData, ...JSON.parse(raw) };
+    if (raw) return deepMerge(defaultData, JSON.parse(raw));
   } catch {
     // ignore corrupt storage
   }
@@ -162,8 +164,38 @@ function loadData() {
 const SiteDataContext = createContext(null);
 
 export function SiteDataProvider({ children }) {
-  const [data, setData] = useState(loadData);
+  const [data, setData] = useState(loadLocal);
+  const [backend, setBackend] = useState(isSupabaseConfigured ? 'connecting' : 'local');
+  const dataRef = useRef(data);
+  const loadedOnce = useRef(false);
 
+  useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (!isSupabaseConfigured) return;
+      const res = await fetchSiteContent();
+      if (cancelled) return;
+      if (res.ok) {
+        const merged = deepMerge(defaultData, res.content || {});
+        setData(merged);
+        if (res.empty || Object.keys(res.content || {}).length === 0) {
+          saveSiteContent(merged);
+        }
+        setBackend('connected');
+      } else {
+        setBackend('error');
+      }
+      loadedOnce.current = true;
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  // Safety net: keep a local mirror so nothing is lost on refresh, even if
+  // the user forgets to hit Save. The durable (backend) write happens via flushSave().
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -178,7 +210,24 @@ export function SiteDataProvider({ children }) {
 
   const resetAll = () => setData(defaultData);
 
-  const value = useMemo(() => ({ data, updateSection, resetAll }), [data]);
+  const flushSave = useCallback(async () => {
+    const snapshot = dataRef.current;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+    } catch {
+      // ignore
+    }
+    if (isSupabaseConfigured && loadedOnce.current) {
+      const res = await saveSiteContent(snapshot);
+      return res.ok;
+    }
+    return true;
+  }, []);
+
+  const value = useMemo(
+    () => ({ data, backend, updateSection, resetAll, flushSave }),
+    [data, backend, flushSave]
+  );
 
   return <SiteDataContext.Provider value={value}>{children}</SiteDataContext.Provider>;
 }

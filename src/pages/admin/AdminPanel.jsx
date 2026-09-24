@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useSiteData } from '@/context/SiteDataContext';
+import { defaultData, useSiteData } from '@/context/SiteDataContext';
+import { isApiConfigured, apiLogin, clearApiToken } from '@/lib/api';
 import { Field, TextAreaField, SectionCard, ArrayEditor, ObjectListEditor, SaveBar } from './controls';
 
 const AUTH_KEY = 'gf_admin_authed';
@@ -32,17 +33,33 @@ function Login({ onSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.trim() === ADMIN_USER && password === ADMIN_PASS) {
-      try {
-        sessionStorage.setItem(AUTH_KEY, '1');
-      } catch { /* no-op */ }
-      setError('');
-      onSuccess();
-    } else {
-      setError('Invalid username or password.');
+    setBusy(true);
+    setError('');
+    try {
+      if (isApiConfigured) {
+        const res = await apiLogin(username.trim(), password);
+        if (res.token) {
+          sessionStorage.setItem(AUTH_KEY, '1');
+          onSuccess();
+          return;
+        }
+        setError(res.error || 'Invalid username or password.');
+      } else {
+        if (username.trim() === ADMIN_USER && password === ADMIN_PASS) {
+          sessionStorage.setItem(AUTH_KEY, '1');
+          onSuccess();
+          return;
+        }
+        setError('Invalid username or password.');
+      }
+    } catch {
+      setError('Backend unreachable — check the API server.');
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -98,9 +115,10 @@ function Login({ onSuccess }) {
 
           <button
             type="submit"
-            className="w-full py-3.5 rounded-xl bg-[#ED3833] hover:bg-[#c92825] text-white font-extrabold uppercase tracking-widest transition-colors shadow-[4px_4px_0_rgba(74,59,50,0.6)] active:translate-y-0.5 active:shadow-none"
+            disabled={busy}
+            className="w-full py-3.5 rounded-xl bg-[#ED3833] hover:bg-[#c92825] text-white font-extrabold uppercase tracking-widest transition-colors shadow-[4px_4px_0_rgba(74,59,50,0.6)] active:translate-y-0.5 active:shadow-none disabled:opacity-60"
           >
-            <i className="fa-solid fa-sign-in-alt mr-2"></i>Sign In
+            <i className={`fa-solid ${busy ? 'fa-circle-notch fa-spin' : 'fa-sign-in-alt'} mr-2`}></i>{busy ? 'Signing In…' : 'Sign In'}
           </button>
 
           <p className="text-center text-xs text-zinc-400">
@@ -113,13 +131,56 @@ function Login({ onSuccess }) {
 }
 
 export default function AdminPanel() {
-  const { data, updateSection, resetAll } = useSiteData();
+  const { data, updateSection, resetAll, flushSave, storage } = useSiteData();
   const [authed, setAuthed] = useState(isAuthed);
   const [active, setActive] = useState('site');
   const [savedAt, setSavedAt] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const [unsaved, setUnsaved] = useState(false);
+  const lastSavedRef = useRef(JSON.stringify(data));
+  const baselined = useRef(false);
+
+  useEffect(() => {
+    if (storage === 'connecting') return;
+    if (storage === 'api' && !baselined.current) {
+      baselined.current = true;
+      lastSavedRef.current = JSON.stringify(data);
+      return;
+    }
+    if (JSON.stringify(data) !== lastSavedRef.current) {
+      setUnsaved(true);
+    }
+  }, [data, storage]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveError(false);
+    const ok = await flushSave();
+    setSaving(false);
+    if (ok) {
+      lastSavedRef.current = JSON.stringify(data);
+      setUnsaved(false);
+      setSavedAt(new Date().toLocaleTimeString());
+    } else {
+      setSaveError(true);
+    }
+  };
+
+  const handleReset = () => {
+    if (!window.confirm('Reset ALL content back to defaults?')) return;
+    resetAll();
+    flushSave();
+    lastSavedRef.current = JSON.stringify(defaultData);
+    setUnsaved(false);
+    setSavedAt(new Date().toLocaleTimeString());
+  };
 
   const logout = () => {
-    try { sessionStorage.removeItem(AUTH_KEY); } catch { /* no-op */ }
+    try {
+      sessionStorage.removeItem(AUTH_KEY);
+      clearApiToken();
+    } catch { /* no-op */ }
     setAuthed(false);
   };
 
@@ -374,12 +435,12 @@ export default function AdminPanel() {
 
             <SaveBar
               savedAt={savedAt}
-              onReset={() => {
-                if (window.confirm('Reset ALL content back to defaults?')) {
-                  resetAll();
-                  setSavedAt(new Date().toLocaleTimeString());
-                }
-              }}
+              saving={saving}
+              saveError={saveError}
+              unsaved={unsaved}
+              storage={storage}
+              onSave={handleSave}
+              onReset={handleReset}
             />
           </div>
         </div>

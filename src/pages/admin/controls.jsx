@@ -149,20 +149,52 @@ export function ObjectListEditor({ label, items, onChange, fields, hint, addLabe
   );
 }
 
-export function SaveBar({ onReset, savedAt }) {
+export function SaveBar({ onReset, onSave, savedAt, saving, saveError, unsaved, storage = 'local' }) {
+  const storageBadge = {
+    api: { icon: 'fa-server', text: 'Server connected', cls: 'bg-[#769678] text-white' },
+    connecting: { icon: 'fa-hourglass-half', text: 'Connecting…', cls: 'bg-amber-500 text-white' },
+    local: { icon: 'fa-floppy-disk', text: 'Local only (no API)', cls: 'bg-zinc-500 text-white' },
+  }[storage] ?? { icon: 'fa-floppy-disk', text: 'Local only', cls: 'bg-zinc-500 text-white' };
+
+  const statusText = saving
+    ? 'Saving…'
+    : saveError
+      ? 'Save failed — try again'
+      : savedAt
+        ? `Saved ${savedAt}`
+        : unsaved
+          ? 'You have unsaved changes'
+          : 'All up to date';
+
   return (
     <div className="sticky bottom-4 mt-6 rounded-xl border-2 border-stone-800 bg-[#4A3B32] px-4 py-3 flex items-center justify-between gap-3 shadow-[5px_5px_0_rgba(0,0,0,0.35)] flex-wrap">
-      <p className="text-xs font-bold uppercase tracking-widest text-white flex items-center gap-2 mb-0">
-        <i className="fa-solid fa-circle-check text-[#ED3833]"></i>
-        {savedAt ? `Saved ${savedAt}` : 'Changes save instantly'}
-      </p>
-      <button
-        type="button"
-        onClick={onReset}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/90 text-white text-xs font-extrabold hover:bg-red-600 transition-colors"
-      >
-        <i className="fa-solid fa-rotate-left"></i> Reset to Defaults
-      </button>
+      <div className="flex items-center gap-3 flex-wrap">
+        <p className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 mb-0 ${saveError ? 'text-red-400' : 'text-white'}`}>
+          <i className={`fa-solid ${saving ? 'fa-circle-notch fa-spin' : saveError ? 'fa-circle-xmark' : savedAt || unsaved ? 'fa-circle-check' : 'fa-circle-check'} ${saveError ? '' : 'text-[#ED3833]'}`}></i>
+          {statusText}
+        </p>
+        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider ${storageBadge.cls}`}>
+          <i className={`fa-solid ${storageBadge.icon}`}></i>{storageBadge.text}
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onSave}
+          disabled={saving}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#ED3833] text-white text-xs font-extrabold uppercase tracking-wider hover:bg-[#c92825] transition-colors disabled:opacity-60"
+        >
+          <i className={`fa-solid ${saving ? 'fa-circle-notch fa-spin' : 'fa-floppy-disk'}`}></i> Save Changes
+        </button>
+        <button
+          type="button"
+          onClick={onReset}
+          disabled={saving}
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-red-500/90 text-white text-xs font-extrabold hover:bg-red-600 transition-colors disabled:opacity-60"
+        >
+          <i className="fa-solid fa-rotate-left"></i> Reset to Defaults
+        </button>
+      </div>
     </div>
   );
 }
