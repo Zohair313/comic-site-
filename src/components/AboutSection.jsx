@@ -26,6 +26,11 @@ export default function AboutSection() {
             <h2 className="display-font font-black text-[#4A3B32] text-5xl md:text-6xl mb-6">
               {about.name}.
             </h2>
+            {about.role && (
+              <p className="badge-font text-[#ED3833] text-sm sm:text-base font-extrabold tracking-widest uppercase mb-6">
+                <i className="fa-solid fa-pen-nib mr-2"></i>{about.role}
+              </p>
+            )}
 
             {about.paragraphs.map((p, idx) => (
               <p key={idx} className="text-[#4A3B32] text-lg leading-relaxed mb-6">{p}</p>

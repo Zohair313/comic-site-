@@ -19,13 +19,7 @@ export default function Bio() {
                 style={{ width: '100%', filter: 'none', borderRadius: '12px' }}
               />
 
-              {/* Small note in place of the old stats */}
-              <div className="w-full mt-4 p-4 rounded-xl border-l-4 bg-white border-[#ED3833] shadow-md">
-                <p className="m-0 !p-0 italic !text-[#4A3B32] !leading-normal !text-lg font-medium !normal-case text-center sm:text-left">
-                  <i className="fa-solid fa-quote-left mr-2 text-[#ED3833]" aria-hidden="true"></i>
-                  Every panel is drawn by hand — inspired by real heroes, made for real readers.
-                </p>
-              </div>
+
             </div>
             <div className="col-lg-6 offset-lg-1 mt-5 mt-lg-0">
               <div className="about-txt">
@@ -58,6 +52,45 @@ export default function Bio() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="row pt-5 mt-5 align-items-center">
+            {/* Text on Left */}
+            <div className="col-lg-6">
+              <div className="about-txt">
+                <span>Creator Intro</span>
+                <h3>The Visionary.</h3>
+                <p className="pt-2 pb-4">
+                  Behind the dynamic panels of Greyfire Studio is a deep-rooted passion for bringing heroic worlds to life. By combining modern storytelling with a strong respect for classic comic artistry, every page is crafted to inspire. The creator builds immersive universes where each character's journey reflects resilience, courage, and the triumph of the human spirit.
+                </p>
+
+                <h5 style={{ color: '#18181b', marginTop: '24px', marginBottom: '12px' }}>Connect with me:</h5>
+                <div className="d-flex gap-3 flex-wrap mb-5 pb-4">
+                  {socialLinks.map((link, idx) => (
+                    <a
+                      key={`creator-social-${idx}`}
+                      href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="button-secondary"
+                      aria-label={link.label}
+                    >
+                      <i className={`${link.icon} me-2`}></i>
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Image on Right */}
+            <div className="col-lg-5 offset-lg-1 mt-5 mt-lg-0 m-md-auto about-main">
+              <img 
+                src="images/author img.jpeg" 
+                alt="Creator" 
+                className="img-fluid" 
+                style={{ width: '100%', filter: 'none', borderRadius: '12px' }}
+              />
             </div>
           </div>
         </div>

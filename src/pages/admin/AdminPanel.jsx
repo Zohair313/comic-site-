@@ -297,6 +297,8 @@ export default function AdminPanel() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Eyebrow" value={d('about').eyebrow} onChange={(v) => updateSection('about', { eyebrow: v })} />
                   <Field label="Name / Heading" value={d('about').name} onChange={(v) => updateSection('about', { name: v })} />
+                  <Field label="Creator Intro (role/tagline)" value={d('about').role ?? ''} onChange={(v) => updateSection('about', { role: v })} />
+                  <TextAreaField label="Creator Intro (short section text)" value={d('about').intro ?? ''} onChange={(v) => updateSection('about', { intro: v })} rows={3} />
                   <Field label="Portrait Image" value={d('about').image} onChange={(v) => updateSection('about', { image: v })} />
                   <Field label="Instagram URL" value={d('about').instagram} onChange={(v) => updateSection('about', { instagram: v })} />
                 </div>

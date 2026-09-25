@@ -46,6 +46,8 @@ export const defaultData = {
   about: {
     eyebrow: 'About Me',
     name: 'Wessley',
+    role: 'Comic Creator, Artist & Army Veteran',
+    intro: "From farm to frontlines to full-page ink — I'm a comic creator, artist and Army veteran. Every panel is drawn by hand to tell stories that heal, inspire, and entertain.",
     image: 'images/author img.jpeg',
     paragraphs: [
       "Welcome to Grey Fire Studio! I'm Wessley — a comic creator, artist, and Army veteran. Growing up on a farm with dyslexia, traditional reading was a challenge until comics opened up a whole new visual world for me.",
