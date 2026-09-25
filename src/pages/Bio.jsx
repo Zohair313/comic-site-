@@ -8,7 +8,7 @@ export default function Bio() {
 
   return (
     <>
-      <section id="about" className="pt-5 pb-20">
+      <section id="about" className="pb-20" style={{ paddingTop: '120px' }}>
         <div className="container">
           <div className="row pt-5 align-items-center">
             <div className="col-lg-5 col-md-9 m-md-auto about-main">
