@@ -13,7 +13,7 @@ export default function Reader() {
 
   return (
     <div className="min-h-screen font-sans pb-16">
-      <section id="new-comics" className="pt-20">
+      <section id="new-comics" style={{ paddingTop: '120px' }}>
         <div className="container">
           <div className="row">
             <div className="section-title t-white">
