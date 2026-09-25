@@ -8,7 +8,7 @@ export default function Bio() {
 
   return (
     <>
-      <section id="about" className="pt-5">
+      <section id="about" className="pt-5 pb-20">
         <div className="container">
           <div className="row pt-5 align-items-center">
             <div className="col-lg-5 col-md-9 m-md-auto about-main">
@@ -43,7 +43,7 @@ export default function Bio() {
                 </div>
 
                 <h5 style={{ color: '#18181b', marginTop: '24px', marginBottom: '12px' }}>Connect with me:</h5>
-                <div className="d-flex gap-3 flex-wrap">
+                <div className="d-flex gap-3 flex-wrap mb-5 pb-4">
                   {socialLinks.map((link, idx) => (
                     <a
                       key={idx}

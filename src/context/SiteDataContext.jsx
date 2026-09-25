@@ -1,8 +1,21 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { isSupabaseConfigured } from '@/lib/supabase';
-import { fetchSiteContent, saveSiteContent, deepMerge } from '@/lib/db';
+import { isApiConfigured, fetchRemoteContent, saveRemoteContent } from '@/lib/api';
 
 const STORAGE_KEY = 'gf_site_data_v2';
+
+function deepMerge(base, overlay) {
+  if (Array.isArray(base) || Array.isArray(overlay)) {
+    return overlay === undefined ? base : overlay;
+  }
+  if (typeof base !== 'object' || base === null || typeof overlay !== 'object' || overlay === null) {
+    return overlay === undefined ? base : overlay;
+  }
+  const out = { ...base };
+  for (const key of Object.keys(overlay)) {
+    out[key] = deepMerge(base[key], overlay[key]);
+  }
+  return out;
+}
 
 export const defaultData = {
   site: {
@@ -165,9 +178,9 @@ const SiteDataContext = createContext(null);
 
 export function SiteDataProvider({ children }) {
   const [data, setData] = useState(loadLocal);
-  const [backend, setBackend] = useState(isSupabaseConfigured ? 'connecting' : 'local');
+  const [storage, setStorage] = useState(isApiConfigured ? 'connecting' : 'local');
   const dataRef = useRef(data);
-  const loadedOnce = useRef(false);
+  const syncedOnce = useRef(false);
 
   useEffect(() => {
     dataRef.current = data;
@@ -176,26 +189,27 @@ export function SiteDataProvider({ children }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      if (!isSupabaseConfigured) return;
-      const res = await fetchSiteContent();
-      if (cancelled) return;
-      if (res.ok) {
-        const merged = deepMerge(defaultData, res.content || {});
-        setData(merged);
-        if (res.empty || Object.keys(res.content || {}).length === 0) {
-          saveSiteContent(merged);
+      if (!isApiConfigured) return;
+      try {
+        const remote = await fetchRemoteContent();
+        if (cancelled) return;
+        if (remote) {
+          const merged = deepMerge(defaultData, remote);
+          setData(merged);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        } else {
+          await saveRemoteContent(dataRef.current);
         }
-        setBackend('connected');
-      } else {
-        setBackend('error');
+        setStorage('api');
+      } catch {
+        if (!cancelled) setStorage('local');
+      } finally {
+        syncedOnce.current = true;
       }
-      loadedOnce.current = true;
     })();
     return () => { cancelled = true; };
   }, []);
 
-  // Safety net: keep a local mirror so nothing is lost on refresh, even if
-  // the user forgets to hit Save. The durable (backend) write happens via flushSave().
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -204,11 +218,11 @@ export function SiteDataProvider({ children }) {
     }
   }, [data]);
 
-  const updateSection = (section, value) => {
+  const updateSection = useCallback((section, value) => {
     setData((prev) => ({ ...prev, [section]: { ...prev[section], ...value } }));
-  };
+  }, []);
 
-  const resetAll = () => setData(defaultData);
+  const resetAll = useCallback(() => setData(defaultData), []);
 
   const flushSave = useCallback(async () => {
     const snapshot = dataRef.current;
@@ -217,16 +231,18 @@ export function SiteDataProvider({ children }) {
     } catch {
       // ignore
     }
-    if (isSupabaseConfigured && loadedOnce.current) {
-      const res = await saveSiteContent(snapshot);
-      return res.ok;
+    if (!isApiConfigured || !syncedOnce.current) return true;
+    try {
+      await saveRemoteContent(snapshot);
+      return true;
+    } catch {
+      return false;
     }
-    return true;
   }, []);
 
   const value = useMemo(
-    () => ({ data, backend, updateSection, resetAll, flushSave }),
-    [data, backend, flushSave]
+    () => ({ data, storage, updateSection, resetAll, flushSave }),
+    [data, storage, updateSection, resetAll, flushSave]
   );
 
   return <SiteDataContext.Provider value={value}>{children}</SiteDataContext.Provider>;
