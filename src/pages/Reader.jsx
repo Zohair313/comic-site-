@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '@/context/SiteDataContext';
+import { resolveSrc } from '@/lib/api';
 
 export default function Reader() {
   const { data } = useSiteData();
@@ -106,7 +107,7 @@ export default function Reader() {
                 }}
               >
                 <img 
-                  src={imgSrc} 
+                  src={resolveSrc(imgSrc)} 
                   alt={`Comic Page ${idx + 1}`} 
                   style={{
                     width: '100%',

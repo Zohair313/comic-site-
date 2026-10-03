@@ -60,6 +60,14 @@ export const defaultData = {
     ],
     instagram: 'https://www.instagram.com/vtube.rrhapsody',
   },
+  creatorIntro: {
+    enabled: true,
+    eyebrow: 'Meet the Creator',
+    name: 'Wessley',
+    role: 'Comic Creator, Artist & Army Veteran',
+    intro: "From the farm to the frontlines to full-page ink — every panel is drawn by hand to tell stories that heal, inspire, and entertain.",
+    image: 'images/author img.jpeg',
+  },
   blog: {
     eyebrow: 'Studio Blog',
     heading: 'Behind the Scenes & Updates',
@@ -80,10 +88,10 @@ export const defaultData = {
     badge: 'Character Bios',
     heading: 'Meet the Core Cast',
     characters: [
-      { name: 'Kaelen', role: 'The Protagonist', desc: 'A young warrior with a mysterious past and a burning desire for justice. He wields the Flame of Aether, an ancient power thought lost forever.', img: 'images/custom/char_kaelen_1787177600102.jpg' },
-      { name: 'Lyra', role: 'Master Mage', desc: 'A brilliant tactician who wields elemental magic with devastating precision. She is the last of the Starweavers, a forgotten order of sorcerers.', img: 'images/custom/char_lyra_1787177611766.jpg' },
-      { name: 'Draken', role: 'The Antagonist', desc: 'A ruthless warlord seeking to conquer the fractured realms. His power comes from corrupted Aether, twisting the natural order.', img: 'images/custom/char_draken_1787177625172.jpg' },
-      { name: 'Elara', role: 'The Guide', desc: 'An ancient spirit trapped in human form, guiding Kaelen on his journey. She remembers the world before the Great Cataclysm.', img: 'images/custom/char_elara_1787177638388.jpg' },
+      { name: 'Kaelen', role: 'The Protagonist', desc: 'A young warrior with a mysterious past and a burning desire for justice. He wields the Flame of Aether, an ancient power thought lost forever.', img: 'images/custom/char_kaelen_1787177600102.jpg', priceCents: 1499 },
+      { name: 'Lyra', role: 'Master Mage', desc: 'A brilliant tactician who wields elemental magic with devastating precision. She is the last of the Starweavers, a forgotten order of sorcerers.', img: 'images/custom/char_lyra_1787177611766.jpg', priceCents: 1299 },
+      { name: 'Draken', role: 'The Antagonist', desc: 'A ruthless warlord seeking to conquer the fractured realms. His power comes from corrupted Aether, twisting the natural order.', img: 'images/custom/char_draken_1787177625172.jpg', priceCents: 1799 },
+      { name: 'Elara', role: 'The Guide', desc: 'An ancient spirit trapped in human form, guiding Kaelen on his journey. She remembers the world before the Great Cataclysm.', img: 'images/custom/char_elara_1787177638388.jpg', priceCents: 999 },
     ],
   },
   reader: {
@@ -117,18 +125,18 @@ export const defaultData = {
     description: 'Every panel, sketch, and cover — drawn by hand, panel by panel. Browse the gallery below.',
     categories: ['All', 'Covers', 'Characters', 'Pages', 'Scenes'],
     artworks: [
-      { img: 'images/hero-comic-cover.jpg', title: 'Skyhawk #1', category: 'Covers', tag: 'Full Cover Art' },
-      { img: 'images/comic cover img.jpg', title: 'Blue Sky 2', category: 'Covers', tag: 'Next Chapter' },
-      { img: 'images/skyhawk_landscape.jpg', title: 'The Ashen Skies', category: 'Scenes', tag: 'Landscape Illustration' },
-      { img: 'images/custom/char_kaelen_1787177600102.jpg', title: 'Kaelen', category: 'Characters', tag: 'Protagonist' },
-      { img: 'images/custom/char_lyra_1787177611766.jpg', title: 'Lyra', category: 'Characters', tag: 'Master Mage' },
-      { img: 'images/custom/char_draken_1787177625172.jpg', title: 'Draken', category: 'Characters', tag: 'The Antagonist' },
-      { img: 'images/custom/char_elara_1787177638388.jpg', title: 'Elara', category: 'Characters', tag: 'The Guide' },
-      { img: 'images/custom/comic_page_1_1787177649462.jpg', title: 'The Awakening', category: 'Pages', tag: 'Story Page' },
-      { img: 'images/custom/comic_page_2_1787177662562.jpg', title: 'Into the Flames', category: 'Pages', tag: 'Story Page' },
-      { img: 'images/Comic story pages.jpg', title: 'Panel Study I', category: 'Pages', tag: 'Action Layout' },
-      { img: 'images/Comic story pages2.jpg', title: 'Panel Study II', category: 'Pages', tag: 'Action Layout' },
-      { img: 'images/intro_post.jpeg', title: 'Studio Announcement', category: 'Scenes', tag: 'Release Art' },
+      { img: 'images/hero-comic-cover.jpg', title: 'Skyhawk #1', category: 'Covers', tag: 'Full Cover Art', priceCents: 1599, desc: 'High-res full cover art for Skyhawk #1.', watermark: true },
+      { img: 'images/comic cover img.jpg', title: 'Blue Sky 2', category: 'Covers', tag: 'Next Chapter', priceCents: 1299, watermark: true },
+      { img: 'images/skyhawk_landscape.jpg', title: 'The Ashen Skies', category: 'Scenes', tag: 'Landscape Illustration', priceCents: 999, watermark: true },
+      { img: 'images/custom/char_kaelen_1787177600102.jpg', title: 'Kaelen', category: 'Characters', tag: 'Protagonist', watermark: true },
+      { img: 'images/custom/char_lyra_1787177611766.jpg', title: 'Lyra', category: 'Characters', tag: 'Master Mage', watermark: true },
+      { img: 'images/custom/char_draken_1787177625172.jpg', title: 'Draken', category: 'Characters', tag: 'The Antagonist', watermark: true },
+      { img: 'images/custom/char_elara_1787177638388.jpg', title: 'Elara', category: 'Characters', tag: 'The Guide', watermark: true },
+      { img: 'images/custom/comic_page_1_1787177649462.jpg', title: 'The Awakening', category: 'Pages', tag: 'Story Page', watermark: true },
+      { img: 'images/custom/comic_page_2_1787177662562.jpg', title: 'Into the Flames', category: 'Pages', tag: 'Story Page', watermark: true },
+      { img: 'images/Comic story pages.jpg', title: 'Panel Study I', category: 'Pages', tag: 'Action Layout', priceCents: 499, watermark: true },
+      { img: 'images/Comic story pages2.jpg', title: 'Panel Study II', category: 'Pages', tag: 'Action Layout', priceCents: 499, watermark: true },
+      { img: 'images/intro_post.jpeg', title: 'Studio Announcement', category: 'Scenes', tag: 'Release Art', watermark: true },
     ],
     ctaText: 'Want more art drops, sketches and process videos?',
     ctaLabel: 'About the Artist',
@@ -181,6 +189,7 @@ const SiteDataContext = createContext(null);
 export function SiteDataProvider({ children }) {
   const [data, setData] = useState(loadLocal);
   const [storage, setStorage] = useState(isApiConfigured ? 'connecting' : 'local');
+  const [persistError, setPersistError] = useState('');
   const dataRef = useRef(data);
   const syncedOnce = useRef(false);
 
@@ -198,7 +207,11 @@ export function SiteDataProvider({ children }) {
         if (remote) {
           const merged = deepMerge(defaultData, remote);
           setData(merged);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+          } catch {
+            // storage full / unavailable — keep the api storage mode
+          }
         } else {
           await saveRemoteContent(dataRef.current);
         }
@@ -215,8 +228,13 @@ export function SiteDataProvider({ children }) {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      setPersistError('');
     } catch {
-      // storage full / unavailable — ignore
+      // localStorage is ~5MB for the whole origin. Inline images can blow it,
+      // and a silent no-op here is how an upload looks like it vanished.
+      setPersistError(
+        'Browser storage is full — the last change was not saved. Connect the API (VITE_API_URL) or use smaller images.'
+      );
     }
   }, [data]);
 
@@ -228,12 +246,17 @@ export function SiteDataProvider({ children }) {
 
   const flushSave = useCallback(async () => {
     const snapshot = dataRef.current;
+    let localOk = true;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+      setPersistError('');
     } catch {
-      // ignore
+      localOk = false;
+      setPersistError(
+        'Browser storage is full — nothing was saved. Connect the API (VITE_API_URL) or use smaller images.'
+      );
     }
-    if (!isApiConfigured || !syncedOnce.current) return true;
+    if (!isApiConfigured || !syncedOnce.current) return localOk;
     try {
       await saveRemoteContent(snapshot);
       return true;
@@ -243,8 +266,8 @@ export function SiteDataProvider({ children }) {
   }, []);
 
   const value = useMemo(
-    () => ({ data, storage, updateSection, resetAll, flushSave }),
-    [data, storage, updateSection, resetAll, flushSave]
+    () => ({ data, storage, updateSection, resetAll, flushSave, persistError }),
+    [data, storage, updateSection, resetAll, flushSave, persistError]
   );
 
   return <SiteDataContext.Provider value={value}>{children}</SiteDataContext.Provider>;

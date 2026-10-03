@@ -14,7 +14,7 @@ export default function Header() {
     { label: 'ABOUT', to: '/bio' },
     { label: 'READ COMIC', to: '/reader' },
     { label: 'ART', to: '/art' },
-    { label: 'CHARACTERS', to: '/lore' },
+    { label: 'PLANS', to: '/checkout' },
     { label: 'CONTACT', to: '/support' },
   ];
 
@@ -47,8 +47,8 @@ export default function Header() {
             {data.site.name}<span style={{ color: '#ED3833', fontSize: 'clamp(1.4rem, 5vw, 28px)', lineHeight: '0.6', marginLeft: '1px' }}>.</span>
           </Link>
 
-          {/* CENTER — nav links absolute-centered (desktop only) */}
-          <ul className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 m-0 p-0">
+          {/* CENTER — nav links absolute-centered (desktop only; needs >=1280px to fit 7 links) */}
+          <ul className="hidden xl:flex absolute left-1/2 -translate-x-1/2 items-center gap-5 m-0 p-0">
             {links.map((link, idx) => (
               <li className="list-none" key={idx}>
                 <Link
@@ -69,7 +69,7 @@ export default function Header() {
             <button
               type="button"
               ref={menuBtnRef}
-              className="lg:hidden flex items-center justify-center border-0 bg-transparent px-1"
+              className="xl:hidden flex items-center justify-center border-0 bg-transparent px-1"
               aria-label="Open menu"
               aria-expanded={open}
               onClick={() => setOpen(true)}
@@ -79,7 +79,7 @@ export default function Header() {
 
             <Link
               to="/reader"
-              className="hidden lg:inline-flex items-center rounded-lg bg-[#ED3833] px-4 py-2 text-[13px] font-extrabold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#c92825] hover:-translate-y-0.5"
+              className="hidden xl:inline-flex items-center rounded-lg bg-[#ED3833] px-4 py-2 text-[13px] font-extrabold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#c92825] hover:-translate-y-0.5"
             >
               Start Reading
             </Link>

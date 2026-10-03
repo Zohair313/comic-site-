@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSiteData } from '@/context/SiteDataContext';
+import { resolveSrc } from '@/lib/api';
 
 export default function AboutSection() {
   const { data } = useSiteData();
@@ -14,7 +15,7 @@ export default function AboutSection() {
           {/* Left — portrait */}
           <div className="relative flex justify-center">
             <img
-              src={about.image}
+              src={resolveSrc(about.image)}
               alt={about.name}
               className="w-72 sm:w-80 lg:w-96 aspect-[3/4] rounded-full object-cover shadow-2xl block"
             />

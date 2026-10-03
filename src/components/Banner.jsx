@@ -1,12 +1,13 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Marquee from './Marquee';
 import { useSiteData } from '@/context/SiteDataContext';
+import { resolveSrc } from '@/lib/api';
 
 export default function Banner() {
   const { data } = useSiteData();
   const hero = data.hero;
-  const bgUrl = `${import.meta.env.BASE_URL}${hero.background}`;
+  const bgUrl = resolveSrc(hero.background);
   return (
     <section
       id="banner"
@@ -63,7 +64,7 @@ export default function Banner() {
                 <div className="bg-[#4A3B32] rounded-md shadow-[0_30px_60px_rgba(0,0,0,0.4)]" style={{ padding: '10px 10px 10px 3px' }}>
                   <div className="relative">
                     <img
-                      src={hero.image}
+                      src={resolveSrc(hero.image)}
                       alt={`${hero.title} cover`}
                       className="block rounded-md max-h-[400px] w-auto max-w-full object-cover"
                       onError={(e) => { e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600"><rect fill="%23e8e4db" width="400" height="600"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-size="18">Cover</text></svg>'; }}

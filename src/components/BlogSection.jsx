@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '@/context/SiteDataContext';
+import { resolveSrc } from '@/lib/api';
 
 export default function BlogSection() {
   const { data } = useSiteData();
@@ -43,7 +44,7 @@ export default function BlogSection() {
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-[#ED3833] bg-[#F5F2EB]">
                     <img
-                      src={b.authorImg}
+                      src={resolveSrc(b.authorImg)}
                       alt={b.authorName}
                       className="w-full h-full object-cover"
                     />
@@ -63,7 +64,7 @@ export default function BlogSection() {
             {/* Comic strip image side */}
             <div className="relative rounded-md overflow-hidden min-h-[280px] bg-[#F5F2EB]">
               <img
-                src={b.image}
+                src={resolveSrc(b.image)}
                 alt="Hand-drawn comic page preview"
                 className="absolute inset-0 w-full h-full object-cover"
                 onError={(e) => { e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600"><rect fill="%23e8e4db" width="400" height="600"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-size="18">Page Art</text></svg>'; }}
@@ -75,11 +76,6 @@ export default function BlogSection() {
           </div>
         </div>
 
-        <div className="text-center mt-8">
-          <Link to={b.ctaTo} className="inline-flex items-center px-6 py-3 text-base rounded-md border-2 border-[#ED3833] bg-[#ED3833] text-white font-bold hover:bg-[#c92825] hover:border-[#c92825] transition-colors">
-            {b.ctaLabel}
-          </Link>
-        </div>
       </div>
     </section>
   );

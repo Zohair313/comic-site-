@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '@/context/SiteDataContext';
+import { resolveSrc } from '@/lib/api';
+import { centsToDollars, artworkProductId } from '@/lib/characters';
 
 export default function ArtCollection() {
   const { data } = useSiteData();
@@ -64,14 +66,21 @@ export default function ArtCollection() {
               onClick={() => setSelected(art)}
               className="group relative text-left bg-white rounded-2xl overflow-hidden border-2 border-stone-800 shadow-[6px_6px_0_rgba(74,59,50,0.85)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(74,59,50,0.85)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ED3833]"
             >
-              <div className="aspect-[4/5] overflow-hidden bg-zinc-100">
+              <div className="aspect-[4/5] overflow-hidden bg-zinc-100 relative">
                 <img
-                  src={art.img}
+                  src={resolveSrc(art.img)}
                   alt={art.title}
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   onError={(e) => { e.target.style.display = 'none'; }}
                 />
+                {art.watermark && (
+                  <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-evenly opacity-30 overflow-hidden mix-blend-overlay">
+                    <span className="text-white text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                    <span className="text-white text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                    <span className="text-white text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                  </div>
+                )}
               </div>
 
               {/* Hover overlay */}
@@ -85,23 +94,21 @@ export default function ArtCollection() {
                 </span>
               </div>
 
-              {/* Category chip */}
-              <span className="absolute top-4 left-4 badge-font bg-white/90 text-zinc-800 text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full shadow">
-                {art.category}
-              </span>
+              {/* Category & Price chip */}
+              <div className="absolute top-4 left-4 flex flex-col gap-2">
+                <span className="badge-font bg-white/90 text-zinc-800 text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full shadow w-fit">
+                  {art.category}
+                </span>
+                {art.priceCents > 0 && (
+                  <span className="badge-font bg-[#ED3833]/90 text-white text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full shadow w-fit">
+                    ${centsToDollars(art.priceCents)}
+                  </span>
+                )}
+              </div>
             </button>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-14">
-          <p className="text-zinc-600 italic mb-4">{art.ctaText}</p>
-          <Link
-            to="/bio"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#4A3B32] text-white font-extrabold uppercase tracking-widest text-sm hover:bg-[#5d4a3f] transition-colors"
-          >
-            <i className="fa-solid fa-palette"></i> {art.ctaLabel}
-          </Link>
         </div>
       </div>
 
@@ -140,17 +147,39 @@ export default function ArtCollection() {
           </button>
 
           <figure className="max-h-[85vh] max-w-4xl w-full text-center" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={selected.img}
-              alt={selected.title}
-              className="max-h-[72vh] w-auto mx-auto rounded-xl border-2 border-white/20 shadow-2xl object-contain"
-            />
+            <div className="relative inline-block max-h-[72vh]">
+              <img
+                src={resolveSrc(selected.img)}
+                alt={selected.title}
+                className="max-h-[72vh] w-auto mx-auto rounded-xl border-2 border-white/20 shadow-2xl object-contain"
+              />
+              {selected.watermark && (
+                <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-evenly opacity-30 overflow-hidden mix-blend-overlay">
+                  <span className="text-white text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                  <span className="text-white text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                  <span className="text-white text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                </div>
+              )}
+            </div>
             <figcaption className="mt-4">
               <p className="badge-font text-[#D9A441] text-xs font-extrabold tracking-[0.3em] uppercase mb-1">{selected.tag}</p>
               <h3 className="display-font italic font-black text-3xl text-white">{selected.title}</h3>
-              <span className="inline-block mt-2 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-white/10 text-zinc-300">
-                {selected.category} · {currentIdx + 1} / {filtered.length}
-              </span>
+              {selected.desc && (
+                <p className="text-zinc-300 text-sm mt-3 max-w-lg mx-auto">{selected.desc}</p>
+              )}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                <span className="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/10 text-zinc-300">
+                  {selected.category} · {currentIdx + 1} / {filtered.length}
+                </span>
+                {selected.priceCents > 0 && (
+                  <Link
+                    to={`/checkout?add=${artworkProductId(selected)}`}
+                    className="inline-flex items-center gap-2 px-5 py-1.5 rounded-full bg-[#ED3833] text-white text-xs font-extrabold uppercase tracking-widest hover:bg-[#c92825] transition-colors"
+                  >
+                    <i className="fa-solid fa-cart-shopping"></i> Buy ${centsToDollars(selected.priceCents)}
+                  </Link>
+                )}
+              </div>
             </figcaption>
           </figure>
         </div>

@@ -36,10 +36,10 @@ export default function PricePlanSection() {
  <p><i class="fa-solid fa-check"></i> Download Limited Assets</p>
  <p><i class="fa-solid fa-check"></i> Free Comic Arts</p>
  <div class="price-btn">
- <a href="#" class="button-secondary">Choose Plan</a>
- </div>
- </div>
- <div class="col-lg-3 col-md-6 price-item text-center active">
+  <a href="#/checkout" class="button-secondary">Choose Plan</a>
+  </div>
+  </div>
+  <div class="col-lg-3 col-md-6 price-item text-center active">
  <div class="mobile-v-bg">
  <span>Recommended</span>
  <img src="data:image/png;base64,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" alt="price-icon">
@@ -50,22 +50,21 @@ export default function PricePlanSection() {
  <p><i class="fa-solid fa-check"></i> Download Limited Assets</p>
  <p><i class="fa-solid fa-check"></i> Free Comic Arts</p>
  <div class="price-btn">
- <a href="#" class="button-secondary">Choose Plan</a>
- </div>
- </div>
- </div>
- <div class="col-lg-3 col-md-6 price-item text-center">
- <span>Superstars</span>
+  <a href="#/checkout" class="button-secondary">Choose Plan</a>
+  </div>
+  </div>
+  <div class="col-lg-3 col-md-6 price-item text-center">
+  <span>Superstars</span>
  <img src="data:image/png;base64,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" alt="price-icon">
  <p>Per Year</p>
  <h3>\$29.9</h3>
  <p><i class="fa-solid fa-check"></i> Free Home Delivery</p>
  <p><i class="fa-solid fa-check"></i> Monthly Five Comic Books</p>
  <p><i class="fa-solid fa-check"></i> Download Limited Assets</p>
- <p><i class="fa-solid fa-check"></i> Free Comic Arts</p>
- <div class="price-btn">
- <a href="#" class="button-secondary">Choose Plan</a>
- </div>
+  <p><i class="fa-solid fa-check"></i> Free Comic Arts</p>
+  <div class="price-btn">
+  <a href="#/checkout" class="button-secondary">Choose Plan</a>
+  </div>
  </div>
  </div>
  </div>

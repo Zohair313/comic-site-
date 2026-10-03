@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { defaultData, useSiteData } from '@/context/SiteDataContext';
 import { isApiConfigured, apiLogin, clearApiToken } from '@/lib/api';
-import { Field, TextAreaField, SectionCard, ArrayEditor, ObjectListEditor, SaveBar } from './controls';
+import { Field, TextAreaField, SectionCard, ArrayEditor, ObjectListEditor, ImageField, SaveBar } from './controls';
+import VenmoPanel from './VenmoPanel';
+import { formatBytes, useStorageUsage } from '@/lib/storageUsage';
 
 const AUTH_KEY = 'gf_admin_authed';
 const ADMIN_USER = 'admin';
@@ -19,13 +21,13 @@ function isAuthed() {
 const sections = [
   { id: 'site', label: 'Site Settings', icon: 'fa-gear' },
   { id: 'hero', label: 'Hero Banner', icon: 'fa-bolt' },
-  { id: 'ticker', label: 'Scrolling Ticker', icon: 'fa-angles-right' },
   { id: 'about', label: 'About Section', icon: 'fa-user' },
+  { id: 'creatorIntro', label: 'Creator Intro', icon: 'fa-handshake-angle' },
   { id: 'blog', label: 'Blog / Updates', icon: 'fa-newspaper' },
-  { id: 'characters', label: 'Characters', icon: 'fa-masks-theater' },
   { id: 'reader', label: 'Comic Reader', icon: 'fa-book-open' },
   { id: 'art', label: 'Art Collection', icon: 'fa-palette' },
   { id: 'contact', label: 'Contact Page', icon: 'fa-envelope' },
+  { id: 'venmo', label: 'Venmo & Orders', icon: 'fa-mobile-screen-button' },
   { id: 'footer', label: 'Footer', icon: 'fa-shoe-prints' },
 ];
 
@@ -131,7 +133,7 @@ function Login({ onSuccess }) {
 }
 
 export default function AdminPanel() {
-  const { data, updateSection, resetAll, flushSave, storage } = useSiteData();
+  const { data, updateSection, resetAll, flushSave, storage, persistError } = useSiteData();
   const [authed, setAuthed] = useState(isAuthed);
   const [active, setActive] = useState('site');
   const [savedAt, setSavedAt] = useState('');
@@ -140,6 +142,8 @@ export default function AdminPanel() {
   const [unsaved, setUnsaved] = useState(false);
   const lastSavedRef = useRef(JSON.stringify(data));
   const baselined = useRef(false);
+  const usage = useStorageUsage();
+  const usagePct = Math.min(100, Math.round((usage.used / usage.limit) * 100));
 
   useEffect(() => {
     if (storage === 'connecting') return;
@@ -203,7 +207,12 @@ export default function AdminPanel() {
             </span>
             <div>
               <h1 className="display-font text-white text-xl leading-none">Admin Panel</h1>
-              <p className="text-xs text-white/60 mt-0.5">Logged in as admin</p>
+              <p className="text-xs text-white/60 mt-0.5">
+                Logged in as admin
+                <span className={`ml-2 font-bold ${usagePct > 85 ? 'text-red-300' : 'text-white/50'}`}>
+                  · storage {formatBytes(usage.used)} / {formatBytes(usage.limit)}
+                </span>
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -249,9 +258,15 @@ export default function AdminPanel() {
           <div>
             <div className="flex items-center gap-3 mb-4 flex-wrap">
               <h2 className="display-font text-[#4A3B32] text-3xl leading-none">{activeSection?.label}</h2>
-              <span className="badge-font bg-[#769678] text-white text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full">
-                <i className="fa-solid fa-pen-nib mr-1"></i>Editable
-              </span>
+              {active === 'venmo' ? (
+                <span className="badge-font bg-[#ED3833] text-white text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full">
+                  <i className="fa-solid fa-money-bill-transfer mr-1"></i>Live
+                </span>
+              ) : (
+                <span className="badge-font bg-[#769678] text-white text-xs font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full">
+                  <i className="fa-solid fa-pen-nib mr-1"></i>Editable
+                </span>
+              )}
             </div>
 
             {/* SITE */}
@@ -273,8 +288,8 @@ export default function AdminPanel() {
                   <Field label="Eyebrow Badge" value={d('hero').badge} onChange={(v) => updateSection('hero', { badge: v })} />
                   <Field label="Title" value={d('hero').title} onChange={(v) => updateSection('hero', { title: v })} />
                   <Field label="Cover Tag" value={d('hero').tag} onChange={(v) => updateSection('hero', { tag: v })} />
-                  <Field label="Cover Image" value={d('hero').image} onChange={(v) => updateSection('hero', { image: v })} hint="Path in /public or full URL" />
-                  <Field label="Background Image" value={d('hero').background} onChange={(v) => updateSection('hero', { background: v })} hint="Path in /public or full URL" />
+                  <ImageField label="Cover Image" value={d('hero').image} onChange={(v) => updateSection('hero', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
+                  <ImageField label="Background Image" value={d('hero').background} onChange={(v) => updateSection('hero', { background: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                   <Field label="Primary CTA Label" value={d('hero').ctaPrimary.label} onChange={(v) => updateSection('hero', { ctaPrimary: { ...d('hero').ctaPrimary, label: v } })} />
                   <Field label="Primary CTA Link" value={d('hero').ctaPrimary.to} onChange={(v) => updateSection('hero', { ctaPrimary: { ...d('hero').ctaPrimary, to: v } })} />
                   <Field label="Secondary CTA Label" value={d('hero').ctaSecondary.label} onChange={(v) => updateSection('hero', { ctaSecondary: { ...d('hero').ctaSecondary, label: v } })} />
@@ -284,26 +299,41 @@ export default function AdminPanel() {
               </SectionCard>
             )}
 
-            {/* TICKER */}
-            {active === 'ticker' && (
-              <SectionCard icon={sections[2].icon} title="Scrolling Ticker" desc="Red marquee strip words at the hero bottom">
-                <ArrayEditor label="Ticker Items" items={d('marquee').items ?? []} onChange={(items) => updateSection('marquee', { items })} />
-              </SectionCard>
-            )}
-
             {/* ABOUT */}
             {active === 'about' && (
-              <SectionCard icon={sections[3].icon} title="About Section" desc="Homepage about block + bio image & socials">
+              <SectionCard icon={sections[2].icon} title="About Section" desc="Homepage about block + bio image & socials">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Eyebrow" value={d('about').eyebrow} onChange={(v) => updateSection('about', { eyebrow: v })} />
                   <Field label="Name / Heading" value={d('about').name} onChange={(v) => updateSection('about', { name: v })} />
                   <Field label="Creator Intro (role/tagline)" value={d('about').role ?? ''} onChange={(v) => updateSection('about', { role: v })} />
                   <TextAreaField label="Creator Intro (short section text)" value={d('about').intro ?? ''} onChange={(v) => updateSection('about', { intro: v })} rows={3} />
-                  <Field label="Portrait Image" value={d('about').image} onChange={(v) => updateSection('about', { image: v })} />
+                  <ImageField label="Portrait Image" value={d('about').image} onChange={(v) => updateSection('about', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                   <Field label="Instagram URL" value={d('about').instagram} onChange={(v) => updateSection('about', { instagram: v })} />
                 </div>
                 <ArrayEditor label="Paragraphs" items={d('about').paragraphs ?? []} onChange={(paragraphs) => updateSection('about', { paragraphs })} />
                 <ArrayEditor label="Key Points (checks)" items={d('about').bullets ?? []} onChange={(bullets) => updateSection('about', { bullets })} />
+              </SectionCard>
+            )}
+
+            {/* CREATOR INTRO */}
+            {active === 'creatorIntro' && (
+              <SectionCard icon={sections[3].icon} title="Creator Intro" desc="Dark 'Meet the Creator' band between About and Blog">
+                <label className="flex items-center gap-2.5 mb-4 select-none">
+                  <input
+                    type="checkbox"
+                    checked={d('creatorIntro').enabled !== false}
+                    onChange={(e) => updateSection('creatorIntro', { enabled: e.target.checked })}
+                    className="w-4 h-4 accent-[#ED3833]"
+                  />
+                  <span className="text-sm font-bold text-zinc-700">Show this section on the homepage</span>
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field label="Eyebrow" value={d('creatorIntro').eyebrow ?? ''} onChange={(v) => updateSection('creatorIntro', { eyebrow: v })} />
+                  <Field label="Creator Name" value={d('creatorIntro').name ?? ''} onChange={(v) => updateSection('creatorIntro', { name: v })} />
+                  <Field label="Role / Tagline" value={d('creatorIntro').role ?? ''} onChange={(v) => updateSection('creatorIntro', { role: v })} />
+                  <ImageField label="Round Portrait Image" value={d('creatorIntro').image ?? ''} onChange={(v) => updateSection('creatorIntro', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
+                </div>
+                <TextAreaField label="Intro Text" value={d('creatorIntro').intro ?? ''} onChange={(v) => updateSection('creatorIntro', { intro: v })} rows={4} />
               </SectionCard>
             )}
 
@@ -319,37 +349,15 @@ export default function AdminPanel() {
                   <Field label="Date Label" value={d('blog').dateLabel} onChange={(v) => updateSection('blog', { dateLabel: v })} />
                   <Field label="Author Name" value={d('blog').authorName} onChange={(v) => updateSection('blog', { authorName: v })} />
                   <Field label="Author Role" value={d('blog').authorRole} onChange={(v) => updateSection('blog', { authorRole: v })} />
-                  <Field label="Author Image" value={d('blog').authorImg} onChange={(v) => updateSection('blog', { authorImg: v })} />
-                  <Field label="Post Image" value={d('blog').image} onChange={(v) => updateSection('blog', { image: v })} />
+                  <ImageField label="Author Image" value={d('blog').authorImg} onChange={(v) => updateSection('blog', { authorImg: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
+                  <ImageField label="Post Image" value={d('blog').image} onChange={(v) => updateSection('blog', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                   <Field label="Image Badge" value={d('blog').imageBadge} onChange={(v) => updateSection('blog', { imageBadge: v })} />
-                  <Field label="CTA Label" value={d('blog').ctaLabel} onChange={(v) => updateSection('blog', { ctaLabel: v })} />
-                  <Field label="CTA Link" value={d('blog').ctaTo} onChange={(v) => updateSection('blog', { ctaTo: v })} />
                 </div>
                 <TextAreaField label="Post Body" value={d('blog').body} onChange={(v) => updateSection('blog', { body: v })} rows={4} />
               </SectionCard>
             )}
 
-            {/* CHARACTERS */}
-            {active === 'characters' && (
-              <SectionCard icon={sections[5].icon} title="Characters" desc="Lore page — the core cast grid">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field label="Section Badge" value={d('lore').badge} onChange={(v) => updateSection('lore', { badge: v })} />
-                  <Field label="Section Heading" value={d('lore').heading} onChange={(v) => updateSection('lore', { heading: v })} />
-                </div>
-                <ObjectListEditor
-                  label="Characters"
-                  items={d('lore').characters ?? []}
-                  onChange={(characters) => updateSection('lore', { characters })}
-                  fields={[
-                    { key: 'name', label: 'Name' },
-                    { key: 'role', label: 'Role' },
-                    { key: 'desc', label: 'Description', full: true },
-                    { key: 'img', label: 'Image Path', hint: 'Path in /public or full URL' },
-                  ]}
-                  newItem={{ name: '', role: '', desc: '', img: '' }}
-                />
-              </SectionCard>
-            )}
+
 
             {/* READER */}
             {active === 'reader' && (
@@ -370,7 +378,7 @@ export default function AdminPanel() {
                   ]}
                   newItem={{ id: 1, title: '', pages: 3 }}
                 />
-                <ArrayEditor label="Comic Page Images" items={d('reader').pages ?? []} onChange={(pages) => updateSection('reader', { pages })} hint="Each entry is one page image in reading order" />
+                <ArrayEditor label="Comic Page Images" items={d('reader').pages ?? []} onChange={(pages) => updateSection('reader', { pages })} type="image" hint="Each entry is one page image in reading order — upload from your PC or paste a path in /public" />
               </SectionCard>
             )}
 
@@ -380,8 +388,6 @@ export default function AdminPanel() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Eyebrow" value={d('art').eyebrow} onChange={(v) => updateSection('art', { eyebrow: v })} />
                   <Field label="Heading" value={d('art').heading} onChange={(v) => updateSection('art', { heading: v })} />
-                  <Field label="CTA Text (below gallery)" value={d('art').ctaText} onChange={(v) => updateSection('art', { ctaText: v })} />
-                  <Field label="CTA Button Label" value={d('art').ctaLabel} onChange={(v) => updateSection('art', { ctaLabel: v })} />
                 </div>
                 <TextAreaField label="Description" value={d('art').description} onChange={(v) => updateSection('art', { description: v })} rows={2} />
                 <ArrayEditor label="Filter Categories" items={d('art').categories ?? []} onChange={(categories) => updateSection('art', { categories })} hint="Keep 'All' as the first item" />
@@ -390,12 +396,15 @@ export default function AdminPanel() {
                   items={d('art').artworks ?? []}
                   onChange={(artworks) => updateSection('art', { artworks })}
                   fields={[
-                    { key: 'img', label: 'Image Path', hint: 'Path in /public or full URL' },
+                    { key: 'img', label: 'Image', type: 'image', hint: 'Upload from your PC, or paste a path in /public or a full URL' },
                     { key: 'title', label: 'Title' },
                     { key: 'category', label: 'Category', hint: 'Must match a filter above' },
                     { key: 'tag', label: 'Tag' },
+                    { key: 'desc', label: 'Description', full: true },
+                    { key: 'priceCents', label: 'Price (USD)', type: 'price', hint: 'Leave 0 or blank to keep this free — no buy button shows' },
+                    { key: 'watermark', label: 'Apply Watermark Overlay?', type: 'checkbox' },
                   ]}
-                  newItem={{ img: '', title: '', category: 'Covers', tag: '' }}
+                  newItem={{ img: '', title: '', category: 'Covers', tag: '', desc: '', priceCents: 0, watermark: true }}
                 />
               </SectionCard>
             )}
@@ -423,27 +432,55 @@ export default function AdminPanel() {
               </SectionCard>
             )}
 
+            {/* VENMO */}
+            {active === 'venmo' && (
+              isApiConfigured ? (
+                <VenmoPanel />
+              ) : (
+                <div className="rounded-xl border-2 border-amber-300 bg-amber-50 p-6 text-sm text-amber-900 space-y-2">
+                  <p className="font-extrabold text-base">
+                    <i className="fa-solid fa-plug-circle-xmark mr-2"></i>Backend not connected
+                  </p>
+                  <p>
+                    Venmo orders live on the API server, so this tab needs a backend URL. Set{' '}
+                    <code className="font-black">VITE_API_URL</code> in <code className="font-black">webapp/.env.local</code> (e.g.{' '}
+                    <code className="font-black">http://localhost:3001</code>), then restart the dev server and log in again.
+                  </p>
+                  <p className="text-amber-800">Until then, use the Contact page email on your Venmo profile to confirm payments by hand.</p>
+                </div>
+              )
+            )}
+
             {/* FOOTER */}
             {active === 'footer' && (
-              <SectionCard icon={sections[9].icon} title="Footer" desc="Footer description, socials and credit line">
+              <SectionCard icon={sections[10].icon} title="Footer" desc="Footer description, socials and credit line">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="About Text" value={d('footer').about} onChange={(v) => updateSection('footer', { about: v })} />
                   <Field label="Instagram URL" value={d('footer').instagram} onChange={(v) => updateSection('footer', { instagram: v })} />
                   <Field label="Email Address" value={d('footer').email} onChange={(v) => updateSection('footer', { email: v })} />
-                  <Field label="Credit Line (Made with ❤ by)" value={d('footer').creditedBy} onChange={(v) => updateSection('footer', { creditedBy: v })} />
+                  <Field label="Credit Line (Made with â¤ by)" value={d('footer').creditedBy} onChange={(v) => updateSection('footer', { creditedBy: v })} />
                 </div>
               </SectionCard>
             )}
 
-            <SaveBar
-              savedAt={savedAt}
-              saving={saving}
-              saveError={saveError}
-              unsaved={unsaved}
-              storage={storage}
-              onSave={handleSave}
-              onReset={handleReset}
-            />
+            {active !== 'venmo' && (
+              <>
+                {persistError && (
+                  <p className="mb-3 rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3 text-xs font-bold text-red-700">
+                    <i className="fa-solid fa-triangle-exclamation mr-2"></i>{persistError}
+                  </p>
+                )}
+                <SaveBar
+                  savedAt={savedAt}
+                  saving={saving}
+                  saveError={saveError}
+                  unsaved={unsaved}
+                  storageError={persistError}
+                  onSave={handleSave}
+                  onReset={handleReset}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
