@@ -45,7 +45,7 @@ export default function Banner() {
             </div>
 
             {/* Twin CTAs */}
-            <div className="flex flex-wrap gap-3.5">
+            <div className="flex flex-wrap gap-3.5 mt-2">
               <Link to={hero.ctaPrimary.to} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-[#ED3833] bg-[#ED3833] text-white font-bold text-base hover:bg-[#c92825] hover:border-[#c92825] transition-colors">
                 <i className="fa-solid fa-book-open"></i>{hero.ctaPrimary.label}
               </Link>

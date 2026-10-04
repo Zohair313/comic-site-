@@ -20,7 +20,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Never overrides variables already present in the environment.
 dotenv.config({ path: path.join(__dirname, '.env') });
 
-const PORT = process.env.PORT || 3001;
+const PORT = Number(process.env.PORT) || 8100;
+const IP = process.env.IP || '::';
+
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'admin';
 const AUTH_SECRET = process.env.AUTH_SECRET || 'change-me-in-production';
@@ -41,7 +43,7 @@ app.use(express.json({ limit: '2mb' }));
 const clampEnv = (value, min, max, fallback) => {
   const num = Number(value);
   if (!Number.isFinite(num)) return fallback;
-  return Math.min(max, Math.max(min, num));
+  return Math.max(min, Math.min(max, num));
 };
 
 const loginLimiter = createLimiter({
@@ -50,10 +52,17 @@ const loginLimiter = createLimiter({
 });
 
 const auth = createAuth({
+  adminUser: ADMIN_USER,
+  adminPass: ADMIN_PASS,
   secret: AUTH_SECRET,
-  username: ADMIN_USER,
-  password: ADMIN_PASS,
+  limiter: loginLimiter,
 });
+
+const orderStore = createOrderStore(VENMO_ORDERS_FILE);
+const assetStore = createAssetStore(VENMO_ASSETS_FILE);
+const storage = createStorage(UPLOADS_DIR);
+const tokens = createActionTokens(AUTH_SECRET);
+const mailer = createMailer();
 
 function ensureDataFile() {
   fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
@@ -78,60 +87,6 @@ function writeContent(payload) {
   fs.renameSync(tmp, DATA_FILE);
 }
 
-const orderStore = createOrderStore(VENMO_ORDERS_FILE);
-const assetStore = createAssetStore(VENMO_ASSETS_FILE);
-const storage = createStorage(UPLOADS_DIR);
-fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-const tokens = createActionTokens({ secret: AUTH_SECRET });
-const mailer = createMailer({ outboxDir: path.join(DATA_DIR, 'mail-outbox') });
-
-// Content images only. assets/ and screenshots/ hold paid goods and payment
-// proofs — those stay behind the tokenised /admin and /download routes.
-app.use(
-  '/uploads/images',
-  express.static(path.join(UPLOADS_DIR, 'images'), { index: false, dotfiles: 'deny', maxAge: '7d' })
-);
-
-app.get('/api/health', (_req, res) => {
-  res.json({ ok: true });
-});
-
-app.get('/api/content', (_req, res) => {
-  res.json(readContent());
-});
-
-app.post('/api/auth/login', (req, res) => {
-  const { username, password } = req.body || {};
-  if (auth.checkCredentials(username, password)) {
-    loginLimiter.reset(req);
-    return res.json({ token: auth.signToken(username) });
-  }
-  const budget = loginLimiter.consume(req);
-  loginLimiter.applyHeaders(res, budget);
-  if (!budget.ok) {
-    res.setHeader('Retry-After', String(budget.retryAfter));
-    return res.status(429).json({
-      error: 'Too many failed sign-in attempts. Please try again later.',
-      retry_after_seconds: budget.retryAfter,
-    });
-  }
-  return res.status(401).json({ error: 'Invalid username or password.' });
-});
-
-app.put('/api/content', auth.requireAuth, (req, res) => {
-  const content = req.body?.content;
-  if (!content || typeof content !== 'object') {
-    return res.status(400).json({ error: 'Invalid content payload.' });
-  }
-  writeContent({ content, updated_at: new Date().toISOString() });
-  return res.json({ ok: true });
-});
-
-/**
- * Characters priced in the admin panel become orderable products. Ids match
- * the frontend's characterProductId() so a Lore buy button lines up with the
- * catalog the order endpoint validates against.
- */
 function contentCharacterProducts() {
   const characters = readContent().content?.lore?.characters;
   if (!Array.isArray(characters)) return [];
@@ -170,8 +125,47 @@ const venmoRouter = createVenmoRouter({
   requireAuth: auth.requireAuth,
   extraProducts: contentCharacterProducts,
 });
+
 app.use('/api/venmo', venmoRouter);
 app.use('/api/admin/images', createImageRouter({ storage, requireAuth: auth.requireAuth }));
+
+// Content images only. assets/ and screenshots/ hold paid goods and payment proofs
+app.use('/uploads/images', express.static(path.join(UPLOADS_DIR, 'images'), { index: false, dotfiles: 'deny', maxAge: '7d' }));
+
+app.get('/api/health', (_req, res) => {
+  res.json({ ok: true });
+});
+
+app.get('/api/content', (_req, res) => {
+  res.json(readContent());
+});
+
+app.post('/api/auth/login', (req, res) => {
+  const { username, password } = req.body || {};
+  if (auth.checkCredentials(username, password)) {
+    loginLimiter.reset(req);
+    return res.json({ token: auth.signToken(username) });
+  }
+  const budget = loginLimiter.consume(req);
+  loginLimiter.applyHeaders(res, budget);
+  if (!budget.ok) {
+    res.setHeader('Retry-After', String(budget.retryAfter));
+    return res.status(429).json({
+      error: 'Too many failed sign-in attempts. Please try again later.',
+      retry_after_seconds: budget.retryAfter,
+    });
+  }
+  return res.status(401).json({ error: 'Invalid username or password.' });
+});
+
+app.put('/api/content', auth.requireAuth, (req, res) => {
+  const content = req.body?.content;
+  if (!content || typeof content !== 'object') {
+    return res.status(400).json({ error: 'Invalid content payload.' });
+  }
+  writeContent({ content, updated_at: new Date().toISOString() });
+  return res.json({ ok: true });
+});
 
 // The documented /api/orders + /api/admin surface, served by the same handlers.
 const aliases = express.Router();
@@ -180,14 +174,25 @@ aliases.get('/api/orders/verify-action', venmoRouter.aliases.verifyAction);
 aliases.patch('/api/admin/orders/:id/status', auth.requireAuth, venmoRouter.aliases.patchOrder);
 app.use(aliases);
 
+// Static frontend files serve karna
+app.use(express.static(__dirname));
+
+// SPA Fallback
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Error handling middleware
 app.use((err, _req, res, _next) => {
   console.error('Unhandled error:', err);
   res.status(500).json({ error: 'Something went wrong on the server.' });
 });
 
-app.listen(PORT, () => {
+// Server listener
+app.listen(PORT, IP, () => {
   const { handle, enabled } = readJson(VENMO_FILE, { config: {} }).config || {};
-  console.log(`Greyfire backend running on http://localhost:${PORT}`);
+  console.log(`Greyfire backend running on http://${IP}:${PORT}`);
   console.log(
     handle
       ? `Venmo: @${handle} (${enabled ? 'checkout enabled' : 'checkout disabled'})`

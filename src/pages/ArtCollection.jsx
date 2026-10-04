@@ -75,10 +75,10 @@ export default function ArtCollection() {
                   onError={(e) => { e.target.style.display = 'none'; }}
                 />
                 {art.watermark && (
-                  <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-evenly opacity-30 overflow-hidden mix-blend-overlay">
-                    <span className="text-white text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
-                    <span className="text-white text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
-                    <span className="text-white text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                  <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-evenly overflow-hidden">
+                    <span className="text-white/40 text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">GREYFIRE STUDIO</span>
+                    <span className="text-white/40 text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">GREYFIRE STUDIO</span>
+                    <span className="text-white/40 text-3xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">GREYFIRE STUDIO</span>
                   </div>
                 )}
               </div>
@@ -108,9 +108,7 @@ export default function ArtCollection() {
             </button>
           ))}
         </div>
-
         </div>
-      </div>
 
       {/* Lightbox Modal */}
       {selected && (
@@ -154,10 +152,10 @@ export default function ArtCollection() {
                 className="max-h-[72vh] w-auto mx-auto rounded-xl border-2 border-white/20 shadow-2xl object-contain"
               />
               {selected.watermark && (
-                <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-evenly opacity-30 overflow-hidden mix-blend-overlay">
-                  <span className="text-white text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
-                  <span className="text-white text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
-                  <span className="text-white text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap">GREYFIRE STUDIO</span>
+                <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-evenly overflow-hidden">
+                  <span className="text-white/40 text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">GREYFIRE STUDIO</span>
+                  <span className="text-white/40 text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">GREYFIRE STUDIO</span>
+                  <span className="text-white/40 text-5xl font-black uppercase tracking-widest transform -rotate-45 select-none whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">GREYFIRE STUDIO</span>
                 </div>
               )}
             </div>

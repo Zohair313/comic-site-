@@ -4,7 +4,7 @@ import path from "path"
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/comic-site-/' : '/',
+  base: '/',
   plugins: [react()],
   resolve: {
     alias: {

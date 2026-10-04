@@ -290,12 +290,8 @@ export default function AdminPanel() {
                   <Field label="Cover Tag" value={d('hero').tag} onChange={(v) => updateSection('hero', { tag: v })} />
                   <ImageField label="Cover Image" value={d('hero').image} onChange={(v) => updateSection('hero', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                   <ImageField label="Background Image" value={d('hero').background} onChange={(v) => updateSection('hero', { background: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
-                  <Field label="Primary CTA Label" value={d('hero').ctaPrimary.label} onChange={(v) => updateSection('hero', { ctaPrimary: { ...d('hero').ctaPrimary, label: v } })} />
-                  <Field label="Primary CTA Link" value={d('hero').ctaPrimary.to} onChange={(v) => updateSection('hero', { ctaPrimary: { ...d('hero').ctaPrimary, to: v } })} />
-                  <Field label="Secondary CTA Label" value={d('hero').ctaSecondary.label} onChange={(v) => updateSection('hero', { ctaSecondary: { ...d('hero').ctaSecondary, label: v } })} />
-                  <Field label="Secondary CTA Link" value={d('hero').ctaSecondary.to} onChange={(v) => updateSection('hero', { ctaSecondary: { ...d('hero').ctaSecondary, to: v } })} />
                 </div>
-                <TextAreaField label="Snippet" value={d('hero').snippet} onChange={(v) => updateSection('hero', { snippet: v })} rows={3} />
+                <TextAreaField label="Snippet" value={d('hero').snippet} onChange={(v) => updateSection('hero', { snippet: v })} rows={3} maxLength={143} hint="Kept short to avoid breaking the UI layout" />
               </SectionCard>
             )}
 
@@ -306,7 +302,7 @@ export default function AdminPanel() {
                   <Field label="Eyebrow" value={d('about').eyebrow} onChange={(v) => updateSection('about', { eyebrow: v })} />
                   <Field label="Name / Heading" value={d('about').name} onChange={(v) => updateSection('about', { name: v })} />
                   <Field label="Creator Intro (role/tagline)" value={d('about').role ?? ''} onChange={(v) => updateSection('about', { role: v })} />
-                  <TextAreaField label="Creator Intro (short section text)" value={d('about').intro ?? ''} onChange={(v) => updateSection('about', { intro: v })} rows={3} />
+                  <TextAreaField label="Creator Intro (short section text)" value={d('about').intro ?? ''} onChange={(v) => updateSection('about', { intro: v })} rows={3} maxLength={173} hint="Kept short to avoid breaking the UI layout" />
                   <ImageField label="Portrait Image" value={d('about').image} onChange={(v) => updateSection('about', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                   <Field label="Instagram URL" value={d('about').instagram} onChange={(v) => updateSection('about', { instagram: v })} />
                 </div>
@@ -333,7 +329,7 @@ export default function AdminPanel() {
                   <Field label="Role / Tagline" value={d('creatorIntro').role ?? ''} onChange={(v) => updateSection('creatorIntro', { role: v })} />
                   <ImageField label="Round Portrait Image" value={d('creatorIntro').image ?? ''} onChange={(v) => updateSection('creatorIntro', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                 </div>
-                <TextAreaField label="Intro Text" value={d('creatorIntro').intro ?? ''} onChange={(v) => updateSection('creatorIntro', { intro: v })} rows={4} />
+                <TextAreaField label="Intro Text" value={d('creatorIntro').intro ?? ''} onChange={(v) => updateSection('creatorIntro', { intro: v })} rows={4} maxLength={131} hint="Kept short to avoid breaking the UI layout" />
               </SectionCard>
             )}
 
@@ -353,7 +349,7 @@ export default function AdminPanel() {
                   <ImageField label="Post Image" value={d('blog').image} onChange={(v) => updateSection('blog', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
                   <Field label="Image Badge" value={d('blog').imageBadge} onChange={(v) => updateSection('blog', { imageBadge: v })} />
                 </div>
-                <TextAreaField label="Post Body" value={d('blog').body} onChange={(v) => updateSection('blog', { body: v })} rows={4} />
+                <TextAreaField label="Post Body" value={d('blog').body} onChange={(v) => updateSection('blog', { body: v })} rows={4} maxLength={241} hint="Kept short to avoid breaking the UI layout" />
               </SectionCard>
             )}
 
@@ -389,7 +385,7 @@ export default function AdminPanel() {
                   <Field label="Eyebrow" value={d('art').eyebrow} onChange={(v) => updateSection('art', { eyebrow: v })} />
                   <Field label="Heading" value={d('art').heading} onChange={(v) => updateSection('art', { heading: v })} />
                 </div>
-                <TextAreaField label="Description" value={d('art').description} onChange={(v) => updateSection('art', { description: v })} rows={2} />
+                <TextAreaField label="Description" value={d('art').description} onChange={(v) => updateSection('art', { description: v })} rows={2} maxLength={91} hint="Kept short to avoid breaking the UI layout" />
                 <ArrayEditor label="Filter Categories" items={d('art').categories ?? []} onChange={(categories) => updateSection('art', { categories })} hint="Keep 'All' as the first item" />
                 <ObjectListEditor
                   label="Artworks"

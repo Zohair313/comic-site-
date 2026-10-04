@@ -16,11 +16,14 @@ export function Field({ label, value, onChange, type = 'text', hint }) {
   );
 }
 
-export function TextAreaField({ label, value, onChange, rows = 3, hint }) {
+export function TextAreaField({ label, value, onChange, rows = 3, hint, maxLength }) {
   return (
     <label className="block">
-      <span className="block text-xs font-extrabold uppercase tracking-wider text-zinc-600 mb-1.5">{label}</span>
-      <textarea rows={rows} value={value ?? ''} onChange={(e) => onChange(e.target.value)} className={`${inputClass} resize-y`} />
+      <span className="block text-xs font-extrabold uppercase tracking-wider text-zinc-600 mb-1.5">
+        {label}
+        {maxLength && <span className="ml-2 font-normal text-zinc-400 lowercase">({value?.length || 0}/{maxLength})</span>}
+      </span>
+      <textarea rows={rows} value={value ?? ''} onChange={(e) => onChange(e.target.value)} maxLength={maxLength} className={`${inputClass} resize-y`} />
       {hint && <span className="block mt-1 text-[11px] text-zinc-400 italic">{hint}</span>}
     </label>
   );
