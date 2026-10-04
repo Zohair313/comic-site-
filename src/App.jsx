@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { useSiteData } from './context/SiteDataContext';
 
 // Pages
 import Home from './pages/Home';
@@ -25,6 +26,14 @@ function ScrollToTop() {
 }
 
 function App() {
+  const { data } = useSiteData();
+
+  useEffect(() => {
+    if (data?.site?.name) {
+      document.title = data.site.name;
+    }
+  }, [data?.site?.name]);
+
   useEffect(() => {
     const handleContextMenu = (e) => {
       if (e.target.tagName === 'IMG') {
@@ -56,6 +65,7 @@ function App() {
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/privacy-policy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
             <Footer />

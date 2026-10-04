@@ -9,7 +9,7 @@ import {
   resolveSrc,
 } from '@/lib/api';
 import { useSiteData } from '@/context/SiteDataContext';
-import { centsToDollars, purchasableCharacters, purchasableArtworks } from '@/lib/characters';
+import { centsToDollars, purchasableArtworks } from '@/lib/characters';
 import { forgetOrder, listOrders, rememberOrder } from '@/lib/venmoOrders';
 
 const POLL_MS = 6000;
@@ -111,14 +111,11 @@ export default function Checkout() {
   const catalog = useMemo(() => {
     const plans = (config?.products ?? []).map((product) => ({ ...product, kind: 'plan' }));
     const taken = new Set(plans.map((product) => product.id));
-    const characters = purchasableCharacters(siteData?.lore?.characters)
-      .filter((product) => !taken.has(product.id))
-      .map((product) => ({ ...product, price: `$${centsToDollars(product.priceCents)}` }));
     const artworks = purchasableArtworks(siteData?.art?.artworks)
       .filter((product) => !taken.has(product.id))
       .map((product) => ({ ...product, price: `$${centsToDollars(product.priceCents)}` }));
-    return [...plans, ...characters, ...artworks];
-  }, [config, siteData?.lore?.characters, siteData?.art?.artworks]);
+    return [...plans, ...artworks];
+  }, [config, siteData?.art?.artworks]);
 
   // Lore links here with ?add=char-kaelen to drop that character straight in.
   useEffect(() => {

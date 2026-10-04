@@ -34,7 +34,6 @@ export default function Footer() {
             <h3 className="badge-font text-white text-xs font-extrabold tracking-widest uppercase mb-5" style={{ fontSize: 'var(--gf-fs-sm)' }}>Store &amp; Support</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <Link to="/support" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Support Creator (Tip Jar)</Link>
-              <Link to="/lore" style={{ color: '#b9bec7', textDecoration: 'none', fontSize: 'var(--gf-fs-sm)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#fff'} onMouseLeave={(e) => e.currentTarget.style.color = '#b9bec7'}>Updates & Blog</Link>
             </div>
           </div>
 

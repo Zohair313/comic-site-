@@ -313,23 +313,17 @@ export default function AdminPanel() {
 
             {/* CREATOR INTRO */}
             {active === 'creatorIntro' && (
-              <SectionCard icon={sections[3].icon} title="Creator Intro" desc="Dark 'Meet the Creator' band between About and Blog">
-                <label className="flex items-center gap-2.5 mb-4 select-none">
-                  <input
-                    type="checkbox"
-                    checked={d('creatorIntro').enabled !== false}
-                    onChange={(e) => updateSection('creatorIntro', { enabled: e.target.checked })}
-                    className="w-4 h-4 accent-[#ED3833]"
-                  />
-                  <span className="text-sm font-bold text-zinc-700">Show this section on the homepage</span>
-                </label>
+              <SectionCard icon={sections[3].icon} title="Creator Intro" desc="Bio page second section">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Eyebrow" value={d('creatorIntro').eyebrow ?? ''} onChange={(v) => updateSection('creatorIntro', { eyebrow: v })} />
                   <Field label="Creator Name" value={d('creatorIntro').name ?? ''} onChange={(v) => updateSection('creatorIntro', { name: v })} />
                   <Field label="Role / Tagline" value={d('creatorIntro').role ?? ''} onChange={(v) => updateSection('creatorIntro', { role: v })} />
-                  <ImageField label="Round Portrait Image" value={d('creatorIntro').image ?? ''} onChange={(v) => updateSection('creatorIntro', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
+                  <ImageField label="Portrait Image" value={d('creatorIntro').image ?? ''} onChange={(v) => updateSection('creatorIntro', { image: v })} hint="Upload from your PC, or paste a path in /public or a full URL" />
+                  <Field label="Instagram URL" value={d('creatorIntro').instagram ?? ''} onChange={(v) => updateSection('creatorIntro', { instagram: v })} />
+                  <Field label="Email Address" value={d('creatorIntro').email ?? ''} onChange={(v) => updateSection('creatorIntro', { email: v })} />
                 </div>
-                <TextAreaField label="Intro Text" value={d('creatorIntro').intro ?? ''} onChange={(v) => updateSection('creatorIntro', { intro: v })} rows={4} maxLength={131} hint="Kept short to avoid breaking the UI layout" />
+                <ArrayEditor label="Paragraphs" items={d('creatorIntro').paragraphs ?? (d('creatorIntro').intro ? [d('creatorIntro').intro] : [])} onChange={(paragraphs) => updateSection('creatorIntro', { paragraphs })} />
+                <ArrayEditor label="Key Points (checks)" items={d('creatorIntro').bullets ?? []} onChange={(bullets) => updateSection('creatorIntro', { bullets })} />
               </SectionCard>
             )}
 
@@ -449,7 +443,7 @@ export default function AdminPanel() {
 
             {/* FOOTER */}
             {active === 'footer' && (
-              <SectionCard icon={sections[10].icon} title="Footer" desc="Footer description, socials and credit line">
+              <SectionCard icon={sections[9].icon} title="Footer" desc="Footer description, socials and credit line">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="About Text" value={d('footer').about} onChange={(v) => updateSection('footer', { about: v })} />
                   <Field label="Instagram URL" value={d('footer').instagram} onChange={(v) => updateSection('footer', { instagram: v })} />

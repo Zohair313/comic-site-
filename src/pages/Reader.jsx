@@ -123,13 +123,6 @@ export default function Reader() {
             ))}
           </div>
 
-          <div className="row mt-5">
-            <div className="col-lg-6">
-              <Link to={reader.backTo} className="button-secondary">
-                <i className="fa-solid fa-arrow-left me-2"></i>{reader.backLabel}
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
     </div>

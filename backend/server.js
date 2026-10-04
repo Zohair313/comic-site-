@@ -52,8 +52,8 @@ const loginLimiter = createLimiter({
 });
 
 const auth = createAuth({
-  adminUser: ADMIN_USER,
-  adminPass: ADMIN_PASS,
+  username: ADMIN_USER,
+  password: ADMIN_PASS,
   secret: AUTH_SECRET,
   limiter: loginLimiter,
 });
@@ -61,7 +61,7 @@ const auth = createAuth({
 const orderStore = createOrderStore(VENMO_ORDERS_FILE);
 const assetStore = createAssetStore(VENMO_ASSETS_FILE);
 const storage = createStorage(UPLOADS_DIR);
-const tokens = createActionTokens(AUTH_SECRET);
+const tokens = createActionTokens({ secret: AUTH_SECRET });
 const mailer = createMailer();
 
 function ensureDataFile() {
